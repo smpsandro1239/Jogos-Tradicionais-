@@ -1,5 +1,6 @@
-import { Entity, PrimaryGeneratedColumn, Column } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
+import { Evento } from '../eventos/evento.entity';
 
 @Entity('aldeias')
 export class Aldeia {
@@ -22,4 +23,7 @@ export class Aldeia {
   @ApiProperty({ required: false })
   @Column({ nullable: true })
   logo_url: string;
+
+  @OneToMany(() => Evento, (evento) => evento.aldeia)
+  eventos: Evento[];
 }

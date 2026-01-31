@@ -16,10 +16,10 @@
 - [x] Qualidade: Swagger Documentation
 
 ## Sprint 2: Eventos + Jogos (Estrutura Base)
-- [ ] Módulo de Eventos (Entidade, CRUD por aldeia)
-- [ ] Módulo de Jogos (Entidade, Tipos: Poio da Vaca / Rifa)
-- [ ] Validações de configuração por tipo de jogo
-- [ ] API Pública de Jogos
+- [x] Módulo de Eventos (Entidade, CRUD por aldeia)
+- [x] Módulo de Jogos (Entidade, Tipos: Poio da Vaca / Rifa)
+- [x] Validações de configuração por tipo de jogo
+- [x] API Pública de Jogos
 
 ## Sprint 3: Participações (Compras) + Regras de Negócio
 - [ ] Módulo de Participações
@@ -36,13 +36,19 @@
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Sprint 1 concluída com melhorias de segurança e qualidade.
-**O que foi feito:**
-- Setup inicial do backend NestJS.
-- Configuração de infraestrutura (Docker, TypeORM, Postgres).
-- Implementação de Autenticação e Autorização (JWT, Roles).
-- Implementação do módulo de Aldeias e Guard de Multi-tenant.
-- Adição de DTOs, ValidationPipe e Swagger.
-- Correção de vulnerabilidades de segurança (role escalation e hardcoded secrets).
-**O que falta realizar:** Sprints 2, 3, 4 e Setup de Frontend.
-**Próxima interação:** Iniciar a Sprint 2 (Eventos + Jogos).
+**Status atual:** Sprint 2 concluída (Estrutura de Eventos e Jogos).
+**Progresso Total:** 68% concluído.
+
+**O que foi feito nesta etapa:**
+- Implementação do Módulo de Eventos com CRUD completo e proteção multi-aldeia.
+- Implementação do Módulo de Jogos suportando "Poio da Vaca" e "Rifa".
+- Validações de configuração específicas para cada tipo de jogo.
+- Exposição de API pública para listagem de jogos e eventos.
+- Relacionamentos entre Aldeias, Eventos e Jogos estabelecidos.
+
+**O que falta realizar:**
+- Sprint 3 (Participações e Regras de Negócio).
+- Sprint 4 (Sorteios Auditáveis).
+- Setup do Frontend (Flutter e Next.js).
+
+**Próxima interação:** Iniciar a Sprint 3 (Participações).
