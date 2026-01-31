@@ -6,6 +6,7 @@ import { CreateParticipacaoDto } from './dto/create-participacao.dto';
 import { JogosService } from '../jogos/jogos.service';
 import { JogoTipo, JogoStatus } from '../jogos/jogo.entity';
 import { AuditoriaService } from '../auditoria/auditoria.service';
+import { ParticipacaoStatus } from './participacao.entity';
 
 @Injectable()
 export class ParticipacoesService {
@@ -81,14 +82,15 @@ export class ParticipacoesService {
     }
   }
 
-  async findAll(jogoId?: string): Promise<Participacao[]> {
-    if (jogoId) {
-      return await this.participacoesRepository.find({
-        where: { jogoId },
-        relations: ['utilizador'],
-      });
-    }
-    return await this.participacoesRepository.find({ relations: ['utilizador', 'jogo'] });
+  async findAll(jogoId?: string, status?: ParticipacaoStatus): Promise<Participacao[]> {
+    const where: any = {};
+    if (jogoId) where.jogoId = jogoId;
+    if (status) where.status = status;
+
+    return await this.participacoesRepository.find({
+      where,
+      relations: ['utilizador', 'jogo'],
+    });
   }
 
   async findByUser(utilizadorId: string): Promise<Participacao[]> {

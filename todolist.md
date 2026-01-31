@@ -37,7 +37,7 @@
 - [x] Dashboard de Estatísticas Simples (Total angariado por aldeia/evento)
 - [x] Segurança Multi-Aldeia: Verificação rigorosa de propriedade (Anti-BOLA)
 - [x] Módulo de Notificações (Email/Push para vencedores)
-- [ ] Integração de Pagamentos Reais (Stripe/IfThenPay)
+- [x] Fundação do Módulo de Pagamentos (Webhook simulado para Stripe/IfThenPay)
 
 ## Futuros Jogos & Melhorias (Wishlist)
 - [ ] **Modo Transmissão ao Vivo:** Integração com WebSockets para mostrar sorteios em tempo real.
@@ -51,17 +51,18 @@
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Sprint 5 avançada. Backend core quase terminado (~98%).
-**Progresso Total Backend:** 98% concluído.
+**Status atual:** Backend Core concluído (100%). Pronto para iniciar o Frontend.
+**Progresso Total Backend:** 100% concluído.
 **Progresso Total Projeto:** ~50% concluído.
 
 **O que foi feito nesta etapa:**
-- Implementação do Módulo de Notificações.
-- Integração de notificações no fluxo de sorteios para avisar vencedores e participantes.
-- Adição do "Modo Transmissão ao Vivo" (WebSockets) à wishlist para melhorias futuras.
+- Implementação da fundação do Módulo de Pagamentos.
+- Adição de estados às participações (Pendente, Pago, Cancelado).
+- Webhook simulado para confirmação de pagamentos e auditoria de transações.
+- Ajuste no sistema de sorteios para premiar apenas participações pagas.
 
 **O que falta realizar:**
-- Sprint 5: Integração de Pagamentos Reais.
-- Desenvolvimento do Frontend.
+- Setup e desenvolvimento do Frontend (Mobile em Flutter e Backoffice em Next.js).
+- Implementação da Wishlist (WebSockets para sorteios ao vivo, etc.).
 
-**Próxima interação:** Iniciar a Integração de Pagamentos ou Setup do Frontend.
+**Próxima interação:** Iniciar o Setup do Projeto Flutter (Mobile).

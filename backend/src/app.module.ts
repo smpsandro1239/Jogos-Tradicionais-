@@ -15,6 +15,7 @@ import { SorteiosModule } from './sorteios/sorteios.module';
 import { AuditoriaModule } from './auditoria/auditoria.module';
 import { EstatisticasModule } from './estatisticas/estatisticas.module';
 import { NotificacoesModule } from './notificacoes/notificacoes.module';
+import { PagamentosModule } from './pagamentos/pagamentos.module';
 
 @Module({
   imports: [
@@ -35,6 +36,7 @@ import { NotificacoesModule } from './notificacoes/notificacoes.module';
     AuditoriaModule,
     EstatisticasModule,
     NotificacoesModule,
+    PagamentosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

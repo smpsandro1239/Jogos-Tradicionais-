@@ -7,6 +7,7 @@ import { JogoStatus, JogoTipo, Jogo } from '../jogos/jogo.entity';
 import { AuditoriaService } from '../auditoria/auditoria.service';
 import { NotificacoesService } from '../notificacoes/notificacoes.service';
 import { ParticipacoesService } from '../participacoes/participacoes.service';
+import { ParticipacaoStatus } from '../participacoes/participacao.entity';
 import * as crypto from 'crypto';
 
 @Injectable()
@@ -84,11 +85,11 @@ export class SorteiosService {
   }
 
   private async processarNotificacoes(jogo: Jogo, resultado: any) {
-    const participacoes = await this.participacoesService.findAll(jogo.id);
-    const emails = participacoes.map(p => p.utilizador.email);
+    const participacoesPagas = await this.participacoesService.findAll(jogo.id, ParticipacaoStatus.PAGO);
+    const emails = participacoesPagas.map(p => p.utilizador.email);
 
     // Identificar vencedor(es)
-    const vencedores = participacoes.filter(p => {
+    const vencedores = participacoesPagas.filter(p => {
       if (jogo.tipo === JogoTipo.RIFA) {
         return p.dados_participacao.numero === resultado.numero;
       } else if (jogo.tipo === JogoTipo.POIO_VACA) {

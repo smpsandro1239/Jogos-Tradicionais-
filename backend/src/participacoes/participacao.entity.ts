@@ -3,6 +3,12 @@ import { ApiProperty } from '@nestjs/swagger';
 import { Jogo } from '../jogos/jogo.entity';
 import { Utilizador } from '../utilizadores/utilizador.entity';
 
+export enum ParticipacaoStatus {
+  PENDENTE = 'pendente',
+  PAGO = 'pago',
+  CANCELADO = 'cancelado',
+}
+
 @Entity('participacoes')
 @Unique(['jogoId', 'dados_participacao'])
 export class Participacao {
@@ -33,6 +39,14 @@ export class Participacao {
   @ApiProperty()
   @Column({ type: 'decimal', precision: 10, scale: 2 })
   valor_pago: number;
+
+  @ApiProperty({ enum: ParticipacaoStatus })
+  @Column({
+    type: 'enum',
+    enum: ParticipacaoStatus,
+    default: ParticipacaoStatus.PENDENTE,
+  })
+  status: ParticipacaoStatus;
 
   @ApiProperty()
   @CreateDateColumn()
