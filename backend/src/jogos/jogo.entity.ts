@@ -1,7 +1,8 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, OneToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Evento } from '../eventos/evento.entity';
 import { Participacao } from '../participacoes/participacao.entity';
+import { Sorteio } from '../sorteios/sorteio.entity';
 
 export enum JogoTipo {
   POIO_VACA = 'poio_vaca',
@@ -54,6 +55,10 @@ export class Jogo {
 
   @OneToMany(() => Participacao, (participacao) => participacao.jogo)
   participacoes: Participacao[];
+
+  @ApiProperty({ type: () => Sorteio })
+  @OneToOne(() => Sorteio, (sorteio) => sorteio.jogo)
+  sorteio: Sorteio;
 
   @ApiProperty()
   @CreateDateColumn()

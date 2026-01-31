@@ -11,6 +11,7 @@ import { AldeiasModule } from './aldeias/aldeias.module';
 import { EventosModule } from './eventos/eventos.module';
 import { JogosModule } from './jogos/jogos.module';
 import { ParticipacoesModule } from './participacoes/participacoes.module';
+import { SorteiosModule } from './sorteios/sorteios.module';
 
 @Module({
   imports: [
@@ -27,6 +28,7 @@ import { ParticipacoesModule } from './participacoes/participacoes.module';
     EventosModule,
     JogosModule,
     ParticipacoesModule,
+    SorteiosModule,
   ],
   controllers: [AppController],
   providers: [AppService],

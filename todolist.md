@@ -27,11 +27,11 @@
 - [x] API de Participações (Comprar, Listar)
 
 ## Sprint 4: Sorteios (Randomização Auditável)
-- [ ] Módulo de Sorteios (Geração de seed, Hash SHA-256)
-- [ ] Resultado determinístico por tipo de jogo
-- [ ] API de Sorteios e Auditoria Pública
+- [x] Módulo de Sorteios (Geração de seed, Hash SHA-256)
+- [x] Resultado determinístico por tipo de jogo
+- [x] API de Sorteios e Auditoria Pública
 
-## Sprint 5: Melhorias e Notificações (Novo)
+## Sprint 5: Melhorias e Notificações
 - [ ] Módulo de Notificações (Email/Push para vencedores)
 - [ ] Integração de Pagamentos Reais (Stripe/IfThenPay)
 - [ ] Logs de Auditoria de Transações
@@ -42,19 +42,18 @@
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Sprint 3 concluída (Módulo de Participações e Regras de Negócio).
-**Progresso Total:** 82% concluído (Backend).
+**Status atual:** Sprint 4 concluída (Sorteios Auditáveis).
+**Progresso Total:** ~90% concluído (Backend).
 
 **O que foi feito nesta etapa:**
-- Implementação do Módulo de Participações com validações automáticas.
-- Lógica de negócio para evitar duplicados de coordenadas (Poio da Vaca) e números (Rifa).
-- Proteção de endpoints de compra para utilizadores autenticados.
-- Relacionamentos estabelecidos entre Utilizadores, Jogos e Participações.
-- Atualização da documentação com sugestões de melhorias para a Sprint 5.
+- Implementação do Módulo de Sorteios.
+- Lógica de randomização auditável usando SHA-256 e sementes dinâmicas.
+- Cálculo determinístico de vencedores para "Poio da Vaca" e "Rifa".
+- API para execução de sorteios por administradores e consulta pública de resultados para auditoria.
+- Atualização do estado do jogo para "TERMINADO" após o sorteio.
 
 **O que falta realizar:**
-- Sprint 4 (Sorteios Auditáveis).
-- Sprint 5 (Melhorias e Notificações).
-- Setup do Frontend (Flutter e Next.js).
+- Sprint 5 (Melhorias, Notificações e Pagamentos).
+- Setup e Desenvolvimento do Frontend (Mobile e Backoffice).
 
-**Próxima interação:** Iniciar a Sprint 4 (Sorteios).
+**Próxima interação:** Iniciar a Sprint 5 ou Setup do Frontend conforme prioridade.
