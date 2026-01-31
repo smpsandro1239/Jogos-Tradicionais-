@@ -10,6 +10,7 @@ import { AuthModule } from './auth/auth.module';
 import { AldeiasModule } from './aldeias/aldeias.module';
 import { EventosModule } from './eventos/eventos.module';
 import { JogosModule } from './jogos/jogos.module';
+import { ParticipacoesModule } from './participacoes/participacoes.module';
 
 @Module({
   imports: [
@@ -25,6 +26,7 @@ import { JogosModule } from './jogos/jogos.module';
     AldeiasModule,
     EventosModule,
     JogosModule,
+    ParticipacoesModule,
   ],
   controllers: [AppController],
   providers: [AppService],

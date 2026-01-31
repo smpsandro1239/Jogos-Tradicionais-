@@ -1,6 +1,7 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne } from 'typeorm';
+import { Entity, PrimaryGeneratedColumn, Column, CreateDateColumn, UpdateDateColumn, ManyToOne, OneToMany } from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Aldeia } from '../aldeias/aldeia.entity';
+import { Participacao } from '../participacoes/participacao.entity';
 
 export enum UserRole {
   SUPER_ADMIN = 'super_admin',
@@ -17,6 +18,9 @@ export class Utilizador {
   @ApiProperty()
   @Column()
   nome: string;
+
+  @OneToMany(() => Participacao, (participacao) => participacao.utilizador)
+  participacoes: Participacao[];
 
   @ApiProperty()
   @Column({ unique: true })

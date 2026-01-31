@@ -22,33 +22,39 @@
 - [x] API Pública de Jogos
 
 ## Sprint 3: Participações (Compras) + Regras de Negócio
-- [ ] Módulo de Participações
-- [ ] Regras de negócio por tipo de jogo (Coordenada única, Número único)
-- [ ] API de Participações (Comprar, Listar)
+- [x] Módulo de Participações
+- [x] Regras de negócio por tipo de jogo (Coordenada única, Número único)
+- [x] API de Participações (Comprar, Listar)
 
 ## Sprint 4: Sorteios (Randomização Auditável)
 - [ ] Módulo de Sorteios (Geração de seed, Hash SHA-256)
 - [ ] Resultado determinístico por tipo de jogo
 - [ ] API de Sorteios e Auditoria Pública
 
+## Sprint 5: Melhorias e Notificações (Novo)
+- [ ] Módulo de Notificações (Email/Push para vencedores)
+- [ ] Integração de Pagamentos Reais (Stripe/IfThenPay)
+- [ ] Logs de Auditoria de Transações
+- [ ] Exportação de Participantes (Excel/PDF para admins)
+
 ## Próximos Passos (Frontend)
 - [ ] Setup Projeto Flutter (Mobile)
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Sprint 2 concluída (Estrutura de Eventos e Jogos).
-**Progresso Total:** 68% concluído.
+**Status atual:** Sprint 3 concluída (Módulo de Participações e Regras de Negócio).
+**Progresso Total:** 82% concluído (Backend).
 
 **O que foi feito nesta etapa:**
-- Implementação do Módulo de Eventos com CRUD completo e proteção multi-aldeia.
-- Implementação do Módulo de Jogos suportando "Poio da Vaca" e "Rifa".
-- Validações de configuração específicas para cada tipo de jogo.
-- Exposição de API pública para listagem de jogos e eventos.
-- Relacionamentos entre Aldeias, Eventos e Jogos estabelecidos.
+- Implementação do Módulo de Participações com validações automáticas.
+- Lógica de negócio para evitar duplicados de coordenadas (Poio da Vaca) e números (Rifa).
+- Proteção de endpoints de compra para utilizadores autenticados.
+- Relacionamentos estabelecidos entre Utilizadores, Jogos e Participações.
+- Atualização da documentação com sugestões de melhorias para a Sprint 5.
 
 **O que falta realizar:**
-- Sprint 3 (Participações e Regras de Negócio).
 - Sprint 4 (Sorteios Auditáveis).
+- Sprint 5 (Melhorias e Notificações).
 - Setup do Frontend (Flutter e Next.js).
 
-**Próxima interação:** Iniciar a Sprint 3 (Participações).
+**Próxima interação:** Iniciar a Sprint 4 (Sorteios).
