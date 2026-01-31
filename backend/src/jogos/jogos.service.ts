@@ -1,4 +1,4 @@
-import { Injectable, NotFoundException, BadRequestException } from '@nestjs/common';
+import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Jogo, JogoTipo } from './jogo.entity';
@@ -47,8 +47,13 @@ export class JogosService {
     return jogo;
   }
 
-  async update(id: string, updateJogoDto: UpdateJogoDto, utilizadorId?: string): Promise<Jogo> {
+  async update(id: string, updateJogoDto: UpdateJogoDto, utilizadorId?: string, userAldeiaId?: string): Promise<Jogo> {
     const jogo = await this.findOne(id);
+
+    if (userAldeiaId && jogo.evento && (jogo.evento as any).aldeiaId !== userAldeiaId) {
+        throw new ForbiddenException('Não tem permissão para alterar este jogo');
+    }
+
     const estadoAntigo = jogo.estado;
 
     if (updateJogoDto.tipo || updateJogoDto.config) {
@@ -72,10 +77,13 @@ export class JogosService {
     return jogoSalvo;
   }
 
-  async remove(id: string): Promise<void> {
-    const result = await this.jogosRepository.delete(id);
-    if (result.affected === 0) {
-      throw new NotFoundException(`Jogo com ID "${id}" não encontrado`);
+  async remove(id: string, userAldeiaId?: string): Promise<void> {
+    const jogo = await this.findOne(id);
+
+    if (userAldeiaId && jogo.evento && (jogo.evento as any).aldeiaId !== userAldeiaId) {
+        throw new ForbiddenException('Não tem permissão para eliminar este jogo');
     }
+
+    await this.jogosRepository.remove(jogo);
   }
 }

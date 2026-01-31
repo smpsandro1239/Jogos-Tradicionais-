@@ -33,10 +33,11 @@
 
 ## Sprint 5: Melhorias, Auditoria e Notificações
 - [x] Módulo de Auditoria de Ações Sensíveis (Sorteios, Mudanças de Estado, Compras)
-- [x] Exportação de Participantes (CSV para admins)
+- [x] Exportação de Participantes (CSV robusto para admins)
+- [x] Dashboard de Estatísticas Simples (Total angariado por aldeia/evento)
+- [x] Segurança Multi-Aldeia: Verificação rigorosa de propriedade (Anti-BOLA)
 - [ ] Módulo de Notificações (Email/Push para vencedores)
 - [ ] Integração de Pagamentos Reais (Stripe/IfThenPay)
-- [ ] Dashboard de Estatísticas Simples (Total angariado por aldeia/evento)
 
 ## Futuros Jogos & Melhorias (Wishlist)
 - [ ] **Jogo do Galo/Galinha Digital:** Animação que escolhe um quadrado aleatório.
@@ -49,18 +50,18 @@
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Sprint 5 em curso. Backend core quase finalizado (~90%).
-**Progresso Total Backend:** 90% concluído.
-**Progresso Total Projeto:** ~48% concluído (considerando Frontend).
+**Status atual:** Sprint 5 avançada. Backend core estabilizado e seguro (~95%).
+**Progresso Total Backend:** 95% concluído.
+**Progresso Total Projeto:** ~50% concluído.
 
 **O que foi feito nesta etapa:**
-- Implementação do Módulo de Auditoria (Audit Log) para registo de ações críticas.
-- Integração da auditoria em Sorteios, Jogos e Participações.
-- Implementação de exportação CSV para lista de participantes.
-- Atualização da Wishlist com novos jogos tradicionais para expandir o impacto do projeto.
+- Implementação do Módulo de Estatísticas.
+- Correção crítica de vulnerabilidades de acesso cruzado (BOLA) em Estatísticas, Participações e Auditoria.
+- Melhoria na exportação CSV com tratamento de caracteres especiais.
+- Reforço da lógica de propriedade (ownership) nos controladores.
 
 **O que falta realizar:**
-- Sprint 5: Notificações, Pagamentos Reais e Estatísticas.
-- Setup e desenvolvimento do Frontend (Mobile e Web).
+- Sprint 5: Notificações e Pagamentos Reais.
+- Desenvolvimento do Frontend.
 
 **Próxima interação:** Iniciar o Módulo de Notificações ou Setup do Frontend.

@@ -41,7 +41,8 @@ export class JogosController {
   @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Atualizar um jogo' })
   update(@Param('id') id: string, @Body() updateJogoDto: UpdateJogoDto, @Request() req) {
-    return this.jogosService.update(id, updateJogoDto, req.user.id);
+    const userAldeiaId = req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
+    return this.jogosService.update(id, updateJogoDto, req.user.id, userAldeiaId);
   }
 
   @Delete(':id')
@@ -49,7 +50,8 @@ export class JogosController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Eliminar um jogo' })
-  remove(@Param('id') id: string) {
-    return this.jogosService.remove(id);
+  remove(@Param('id') id: string, @Request() req) {
+    const userAldeiaId = req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
+    return this.jogosService.remove(id, userAldeiaId);
   }
 }

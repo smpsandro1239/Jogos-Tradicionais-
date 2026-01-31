@@ -13,6 +13,7 @@ import { JogosModule } from './jogos/jogos.module';
 import { ParticipacoesModule } from './participacoes/participacoes.module';
 import { SorteiosModule } from './sorteios/sorteios.module';
 import { AuditoriaModule } from './auditoria/auditoria.module';
+import { EstatisticasModule } from './estatisticas/estatisticas.module';
 
 @Module({
   imports: [
@@ -31,6 +32,7 @@ import { AuditoriaModule } from './auditoria/auditoria.module';
     ParticipacoesModule,
     SorteiosModule,
     AuditoriaModule,
+    EstatisticasModule,
   ],
   controllers: [AppController],
   providers: [AppService],
