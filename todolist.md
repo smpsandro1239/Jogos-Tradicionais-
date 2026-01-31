@@ -36,10 +36,11 @@
 - [x] Exportação de Participantes (CSV robusto para admins)
 - [x] Dashboard de Estatísticas Simples (Total angariado por aldeia/evento)
 - [x] Segurança Multi-Aldeia: Verificação rigorosa de propriedade (Anti-BOLA)
-- [ ] Módulo de Notificações (Email/Push para vencedores)
+- [x] Módulo de Notificações (Email/Push para vencedores)
 - [ ] Integração de Pagamentos Reais (Stripe/IfThenPay)
 
 ## Futuros Jogos & Melhorias (Wishlist)
+- [ ] **Modo Transmissão ao Vivo:** Integração com WebSockets para mostrar sorteios em tempo real.
 - [ ] **Jogo do Galo/Galinha Digital:** Animação que escolhe um quadrado aleatório.
 - [ ] **Leilão de Cabazes:** Sistema de licitações em tempo real com contagem decrescente.
 - [ ] **Tômbola Digital:** Sorteio imediato após a compra para pequenos prémios.
@@ -50,18 +51,17 @@
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Sprint 5 avançada. Backend core estabilizado e seguro (~95%).
-**Progresso Total Backend:** 95% concluído.
+**Status atual:** Sprint 5 avançada. Backend core quase terminado (~98%).
+**Progresso Total Backend:** 98% concluído.
 **Progresso Total Projeto:** ~50% concluído.
 
 **O que foi feito nesta etapa:**
-- Implementação do Módulo de Estatísticas.
-- Correção crítica de vulnerabilidades de acesso cruzado (BOLA) em Estatísticas, Participações e Auditoria.
-- Melhoria na exportação CSV com tratamento de caracteres especiais.
-- Reforço da lógica de propriedade (ownership) nos controladores.
+- Implementação do Módulo de Notificações.
+- Integração de notificações no fluxo de sorteios para avisar vencedores e participantes.
+- Adição do "Modo Transmissão ao Vivo" (WebSockets) à wishlist para melhorias futuras.
 
 **O que falta realizar:**
-- Sprint 5: Notificações e Pagamentos Reais.
+- Sprint 5: Integração de Pagamentos Reais.
 - Desenvolvimento do Frontend.
 
-**Próxima interação:** Iniciar o Módulo de Notificações ou Setup do Frontend.
+**Próxima interação:** Iniciar a Integração de Pagamentos ou Setup do Frontend.

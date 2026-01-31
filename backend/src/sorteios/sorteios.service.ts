@@ -3,8 +3,10 @@ import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Sorteio } from './sorteio.entity';
 import { JogosService } from '../jogos/jogos.service';
-import { JogoStatus, JogoTipo } from '../jogos/jogo.entity';
+import { JogoStatus, JogoTipo, Jogo } from '../jogos/jogo.entity';
 import { AuditoriaService } from '../auditoria/auditoria.service';
+import { NotificacoesService } from '../notificacoes/notificacoes.service';
+import { ParticipacoesService } from '../participacoes/participacoes.service';
 import * as crypto from 'crypto';
 
 @Injectable()
@@ -14,6 +16,8 @@ export class SorteiosService {
     private readonly sorteiosRepository: Repository<Sorteio>,
     private readonly jogosService: JogosService,
     private readonly auditoriaService: AuditoriaService,
+    private readonly participacoesService: ParticipacoesService,
+    private readonly notificacoesService: NotificacoesService,
   ) {}
 
   async realizarSorteio(jogoId: string, utilizadorId?: string, aldeiaId?: string): Promise<Sorteio> {
@@ -41,6 +45,9 @@ export class SorteiosService {
 
     // Atualizar estado do jogo
     await this.jogosService.update(jogoId, { estado: JogoStatus.TERMINADO });
+
+    // Notificar vencedor e participantes
+    this.processarNotificacoes(jogo, resultado);
 
     // Registar na auditoria
     await this.auditoriaService.log(
@@ -74,6 +81,34 @@ export class SorteiosService {
     }
 
     throw new BadRequestException('Tipo de jogo desconhecido para sorteio');
+  }
+
+  private async processarNotificacoes(jogo: Jogo, resultado: any) {
+    const participacoes = await this.participacoesService.findAll(jogo.id);
+    const emails = participacoes.map(p => p.utilizador.email);
+
+    // Identificar vencedor(es)
+    const vencedores = participacoes.filter(p => {
+      if (jogo.tipo === JogoTipo.RIFA) {
+        return p.dados_participacao.numero === resultado.numero;
+      } else if (jogo.tipo === JogoTipo.POIO_VACA) {
+        return p.dados_participacao.linha === resultado.linha && p.dados_participacao.coluna === resultado.coluna;
+      }
+      return false;
+    });
+
+    // Notificar vencedores
+    for (const v of vencedores) {
+      await this.notificacoesService.notificarVencedor(
+        v.utilizador.email,
+        v.utilizador.nome,
+        jogo.tipo, // Idealmente teríamos o nome do evento/jogo mais descritivo
+        resultado
+      );
+    }
+
+    // Notificar todos os outros participantes
+    await this.notificacoesService.notificarSorteioRealizado(emails, jogo.tipo);
   }
 
   async findOneByJogo(jogoId: string): Promise<Sorteio> {
