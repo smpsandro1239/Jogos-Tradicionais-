@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Request } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { JogosService } from './jogos.service';
 import { CreateJogoDto } from './dto/create-jogo.dto';
@@ -40,8 +40,8 @@ export class JogosController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Atualizar um jogo' })
-  update(@Param('id') id: string, @Body() updateJogoDto: UpdateJogoDto) {
-    return this.jogosService.update(id, updateJogoDto);
+  update(@Param('id') id: string, @Body() updateJogoDto: UpdateJogoDto, @Request() req) {
+    return this.jogosService.update(id, updateJogoDto, req.user.id);
   }
 
   @Delete(':id')

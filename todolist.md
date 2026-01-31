@@ -31,29 +31,36 @@
 - [x] Resultado determinístico por tipo de jogo
 - [x] API de Sorteios e Auditoria Pública
 
-## Sprint 5: Melhorias e Notificações
+## Sprint 5: Melhorias, Auditoria e Notificações
+- [x] Módulo de Auditoria de Ações Sensíveis (Sorteios, Mudanças de Estado, Compras)
+- [x] Exportação de Participantes (CSV para admins)
 - [ ] Módulo de Notificações (Email/Push para vencedores)
 - [ ] Integração de Pagamentos Reais (Stripe/IfThenPay)
-- [ ] Logs de Auditoria de Transações
-- [ ] Exportação de Participantes (Excel/PDF para admins)
+- [ ] Dashboard de Estatísticas Simples (Total angariado por aldeia/evento)
+
+## Futuros Jogos & Melhorias (Wishlist)
+- [ ] **Jogo do Galo/Galinha Digital:** Animação que escolhe um quadrado aleatório.
+- [ ] **Leilão de Cabazes:** Sistema de licitações em tempo real com contagem decrescente.
+- [ ] **Tômbola Digital:** Sorteio imediato após a compra para pequenos prémios.
+- [ ] **Multilingue:** Suporte para Inglês/Francês (para emigrantes).
 
 ## Próximos Passos (Frontend)
 - [ ] Setup Projeto Flutter (Mobile)
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Sprint 4 concluída (Sorteios Auditáveis).
-**Progresso Total:** ~90% concluído (Backend).
+**Status atual:** Sprint 5 em curso. Backend core quase finalizado (~90%).
+**Progresso Total Backend:** 90% concluído.
+**Progresso Total Projeto:** ~48% concluído (considerando Frontend).
 
 **O que foi feito nesta etapa:**
-- Implementação do Módulo de Sorteios.
-- Lógica de randomização auditável usando SHA-256 e sementes dinâmicas.
-- Cálculo determinístico de vencedores para "Poio da Vaca" e "Rifa".
-- API para execução de sorteios por administradores e consulta pública de resultados para auditoria.
-- Atualização do estado do jogo para "TERMINADO" após o sorteio.
+- Implementação do Módulo de Auditoria (Audit Log) para registo de ações críticas.
+- Integração da auditoria em Sorteios, Jogos e Participações.
+- Implementação de exportação CSV para lista de participantes.
+- Atualização da Wishlist com novos jogos tradicionais para expandir o impacto do projeto.
 
 **O que falta realizar:**
-- Sprint 5 (Melhorias, Notificações e Pagamentos).
-- Setup e Desenvolvimento do Frontend (Mobile e Backoffice).
+- Sprint 5: Notificações, Pagamentos Reais e Estatísticas.
+- Setup e desenvolvimento do Frontend (Mobile e Web).
 
-**Próxima interação:** Iniciar a Sprint 5 ou Setup do Frontend conforme prioridade.
+**Próxima interação:** Iniciar o Módulo de Notificações ou Setup do Frontend.

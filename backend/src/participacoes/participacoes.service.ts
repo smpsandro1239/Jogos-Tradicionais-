@@ -5,6 +5,7 @@ import { Participacao } from './participacao.entity';
 import { CreateParticipacaoDto } from './dto/create-participacao.dto';
 import { JogosService } from '../jogos/jogos.service';
 import { JogoTipo, JogoStatus } from '../jogos/jogo.entity';
+import { AuditoriaService } from '../auditoria/auditoria.service';
 
 @Injectable()
 export class ParticipacoesService {
@@ -12,6 +13,7 @@ export class ParticipacoesService {
     @InjectRepository(Participacao)
     private readonly participacoesRepository: Repository<Participacao>,
     private readonly jogosService: JogosService,
+    private readonly auditoriaService: AuditoriaService,
   ) {}
 
   async create(createParticipacaoDto: CreateParticipacaoDto, utilizadorId: string): Promise<Participacao> {
@@ -42,7 +44,17 @@ export class ParticipacoesService {
     });
 
     try {
-      return await this.participacoesRepository.save(participacao);
+      const participacaoSalva = await this.participacoesRepository.save(participacao);
+
+      // Registar na auditoria
+      await this.auditoriaService.log(
+        'PARTICIPACAO_COMPRADA',
+        { participacaoId: participacaoSalva.id, jogoId: createParticipacaoDto.jogoId, dados: createParticipacaoDto.dados_participacao },
+        utilizadorId,
+        jogo.evento ? (jogo.evento as any).aldeiaId : undefined,
+      );
+
+      return participacaoSalva;
     } catch (error) {
       if (error.code === '23505') { // Unique violation
         throw new ConflictException('Esta participação já existe');

@@ -4,6 +4,7 @@ import { Repository } from 'typeorm';
 import { Sorteio } from './sorteio.entity';
 import { JogosService } from '../jogos/jogos.service';
 import { JogoStatus, JogoTipo } from '../jogos/jogo.entity';
+import { AuditoriaService } from '../auditoria/auditoria.service';
 import * as crypto from 'crypto';
 
 @Injectable()
@@ -12,9 +13,10 @@ export class SorteiosService {
     @InjectRepository(Sorteio)
     private readonly sorteiosRepository: Repository<Sorteio>,
     private readonly jogosService: JogosService,
+    private readonly auditoriaService: AuditoriaService,
   ) {}
 
-  async realizarSorteio(jogoId: string): Promise<Sorteio> {
+  async realizarSorteio(jogoId: string, utilizadorId?: string, aldeiaId?: string): Promise<Sorteio> {
     const jogo = await this.jogosService.findOne(jogoId);
 
     if (jogo.estado === JogoStatus.TERMINADO) {
@@ -39,6 +41,14 @@ export class SorteiosService {
 
     // Atualizar estado do jogo
     await this.jogosService.update(jogoId, { estado: JogoStatus.TERMINADO });
+
+    // Registar na auditoria
+    await this.auditoriaService.log(
+      'SORTEIO_REALIZADO',
+      { jogoId, resultado, hash },
+      utilizadorId,
+      aldeiaId || (jogo.evento ? (jogo.evento as any).aldeiaId : undefined),
+    );
 
     return sorteioSalvo;
   }

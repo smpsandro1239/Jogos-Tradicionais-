@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Post, Param, UseGuards, Request } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { SorteiosService } from './sorteios.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -17,8 +17,8 @@ export class SorteiosController {
   @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Realizar o sorteio de um jogo (Admin)' })
   @ApiResponse({ status: 201, description: 'Sorteio realizado com sucesso' })
-  realizarSorteio(@Param('jogoId') jogoId: string) {
-    return this.sorteiosService.realizarSorteio(jogoId);
+  realizarSorteio(@Param('jogoId') jogoId: string, @Request() req) {
+    return this.sorteiosService.realizarSorteio(jogoId, req.user.id, req.user.aldeiaId);
   }
 
   @Get(':jogoId')

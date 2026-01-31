@@ -1,4 +1,4 @@
-import { Controller, Get, Post, Body, Param, UseGuards, Query, Request } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, UseGuards, Query, Request, Res } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
 import { ParticipacoesService } from './participacoes.service';
 import { CreateParticipacaoDto } from './dto/create-participacao.dto';
@@ -34,6 +34,23 @@ export class ParticipacoesController {
   @ApiOperation({ summary: 'Listar as minhas participações' })
   findMyParticipations(@Request() req) {
     return this.participacoesService.findByUser(req.user.id);
+  }
+
+  @Get('export/csv')
+  @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Exportar participações para CSV (Admin)' })
+  async exportCsv(@Query('jogoId') jogoId: string, @Res() res) {
+    const participacoes = await this.participacoesService.findAll(jogoId);
+
+    let csv = 'ID,Utilizador,Email,Dados,Valor Pago,Data\n';
+    participacoes.forEach(p => {
+      const dadosStr = JSON.stringify(p.dados_participacao).replace(/"/g, '""');
+      csv += `${p.id},${p.utilizador.nome},${p.utilizador.email},"${dadosStr}",${p.valor_pago},${p.created_at.toISOString()}\n`;
+    });
+
+    res.header('Content-Type', 'text/csv; charset=utf-8');
+    res.attachment(`participacoes_${jogoId || 'todas'}.csv`);
+    return res.send(csv);
   }
 
   @Get(':id')

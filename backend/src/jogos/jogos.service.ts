@@ -4,12 +4,14 @@ import { Repository } from 'typeorm';
 import { Jogo, JogoTipo } from './jogo.entity';
 import { CreateJogoDto } from './dto/create-jogo.dto';
 import { UpdateJogoDto } from './dto/update-jogo.dto';
+import { AuditoriaService } from '../auditoria/auditoria.service';
 
 @Injectable()
 export class JogosService {
   constructor(
     @InjectRepository(Jogo)
     private readonly jogosRepository: Repository<Jogo>,
+    private readonly auditoriaService: AuditoriaService,
   ) {}
 
   private validateConfig(tipo: JogoTipo, config: any) {
@@ -45,8 +47,9 @@ export class JogosService {
     return jogo;
   }
 
-  async update(id: string, updateJogoDto: UpdateJogoDto): Promise<Jogo> {
+  async update(id: string, updateJogoDto: UpdateJogoDto, utilizadorId?: string): Promise<Jogo> {
     const jogo = await this.findOne(id);
+    const estadoAntigo = jogo.estado;
 
     if (updateJogoDto.tipo || updateJogoDto.config) {
       const tipo = updateJogoDto.tipo || jogo.tipo;
@@ -55,7 +58,18 @@ export class JogosService {
     }
 
     Object.assign(jogo, updateJogoDto);
-    return await this.jogosRepository.save(jogo);
+    const jogoSalvo = await this.jogosRepository.save(jogo);
+
+    if (updateJogoDto.estado && updateJogoDto.estado !== estadoAntigo) {
+      await this.auditoriaService.log(
+        'JOGO_ESTADO_ALTERADO',
+        { jogoId: id, de: estadoAntigo, para: updateJogoDto.estado },
+        utilizadorId,
+        jogo.evento ? (jogo.evento as any).aldeiaId : undefined,
+      );
+    }
+
+    return jogoSalvo;
   }
 
   async remove(id: string): Promise<void> {
