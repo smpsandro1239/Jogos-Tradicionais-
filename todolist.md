@@ -41,28 +41,34 @@
 
 ## Futuros Jogos & Melhorias (Wishlist)
 - [ ] **Modo Transmissão ao Vivo:** Integração com WebSockets para mostrar sorteios em tempo real.
+- [ ] **Localização GPS:** Ver no mapa onde as aldeias se localizam.
+- [ ] **Galeria de Fotos:** Fotos dos eventos passados e dos prémios reais.
 - [ ] **Jogo do Galo/Galinha Digital:** Animação que escolhe um quadrado aleatório.
 - [ ] **Leilão de Cabazes:** Sistema de licitações em tempo real com contagem decrescente.
 - [ ] **Tômbola Digital:** Sorteio imediato após a compra para pequenos prémios.
 - [ ] **Multilingue:** Suporte para Inglês/Francês (para emigrantes).
 
 ## Próximos Passos (Frontend)
-- [ ] Setup Projeto Flutter (Mobile)
+- [x] Setup Projeto Flutter (Mobile)
+- [ ] Implementar Autenticação no Flutter (Login/Register)
+- [ ] Listagem de Aldeias e Eventos na App
+- [ ] Compra de participações via App
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Backend Core concluído (100%). Pronto para iniciar o Frontend.
+**Status atual:** Backend Core concluído (100%). Setup Mobile iniciado.
 **Progresso Total Backend:** 100% concluído.
-**Progresso Total Projeto:** ~50% concluído.
+**Progresso Total Projeto:** ~55% concluído.
 
 **O que foi feito nesta etapa:**
-- Implementação da fundação do Módulo de Pagamentos.
-- Adição de estados às participações (Pendente, Pago, Cancelado).
-- Webhook simulado para confirmação de pagamentos e auditoria de transações.
-- Ajuste no sistema de sorteios para premiar apenas participações pagas.
+- Inicialização do projeto Flutter em `frontend/mobile`.
+- Configuração de Tema, Cores e SplashScreen.
+- Adição de dependências base (http, provider, secure storage).
+- Atualização da Wishlist com "Localização GPS" e "Galeria de Fotos".
 
 **O que falta realizar:**
-- Setup e desenvolvimento do Frontend (Mobile em Flutter e Backoffice em Next.js).
-- Implementação da Wishlist (WebSockets para sorteios ao vivo, etc.).
+- Desenvolvimento das funcionalidades mobile (Auth, Listagens, Compras).
+- Setup e desenvolvimento do Backoffice Web (Next.js).
+- Integração final com WebSockets (futuro).
 
-**Próxima interação:** Iniciar o Setup do Projeto Flutter (Mobile).
+**Próxima interação:** Implementar Autenticação (Login/Registo) no Flutter.
