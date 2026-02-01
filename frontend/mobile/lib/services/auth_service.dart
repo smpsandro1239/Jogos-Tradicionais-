@@ -1,15 +1,12 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
 import '../models/auth_response.dart';
+import '../core/api_config.dart';
 
 class AuthService {
-  // Em ambiente de desenvolvimento Android Emulator, localhost é 10.0.2.2
-  // Em iOS simulator é localhost. Para este ambiente sandbox, usaremos localhost.
-  static const String baseUrl = 'http://localhost:3000/api';
-
   Future<AuthResponse> login(String email, String password) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/auth/login'),
+      Uri.parse('${ApiConfig.baseUrl}/auth/login'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'email': email,
@@ -27,7 +24,7 @@ class AuthService {
 
   Future<void> register(String nome, String email, String password) async {
     final response = await http.post(
-      Uri.parse('$baseUrl/auth/register'),
+      Uri.parse('${ApiConfig.baseUrl}/auth/register'),
       headers: {'Content-Type': 'application/json'},
       body: jsonEncode({
         'nome': nome,

@@ -43,6 +43,7 @@
 - [ ] **Modo Transmissão ao Vivo:** Integração com WebSockets para mostrar sorteios em tempo real.
 - [ ] **Localização GPS:** Ver no mapa onde as aldeias se localizam.
 - [ ] **Galeria de Fotos:** Fotos dos eventos passados e dos prémios reais.
+- [ ] **Filtros e Pesquisa:** Pesquisar aldeias por nome ou localização.
 - [ ] **Jogo do Galo/Galinha Digital:** Animação que escolhe um quadrado aleatório.
 - [ ] **Leilão de Cabazes:** Sistema de licitações em tempo real com contagem decrescente.
 - [ ] **Tômbola Digital:** Sorteio imediato após a compra para pequenos prémios.
@@ -51,25 +52,26 @@
 ## Próximos Passos (Frontend)
 - [x] Setup Projeto Flutter (Mobile)
 - [x] Implementar Autenticação no Flutter (Login/Register)
-- [ ] Listagem de Aldeias e Eventos na App
-- [ ] Compra de participações via App
+- [x] Listagem de Aldeias e Eventos na App
+- [ ] Listagem de Jogos e Visualização de Grelha (Poio da Vaca)
+- [ ] Fluxo de Compra de Participações (App -> Backend)
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Autenticação Mobile concluída. Iniciando listagem de conteúdos.
+**Status atual:** Listagem de conteúdos mobile concluída. Iniciando lógica de jogos na app.
 **Progresso Total Backend:** 100% concluído.
-**Progresso Total Projeto:** ~60% concluído.
+**Progresso Total Projeto:** ~65% concluído.
 
 **O que foi feito nesta etapa:**
-- Implementação de modelos de dados (User, AuthResponse) no Flutter.
-- Implementação de `AuthService` para comunicação com backend.
-- Gestão de estado de autenticação com `AuthProvider` (Provider + Secure Storage).
-- Criação de ecrãs de Login e Registo com validações.
-- Navegação inteligente baseada no estado de autenticação (Splash -> Login ou Home).
+- Implementação dos modelos `Aldeia` e `Evento` no Flutter.
+- Criação de serviços para integração com a API do backend.
+- Atualização da `HomeScreen` para listar aldeias dinamicamente.
+- Criação da `EventosScreen` para visualizar eventos por aldeia.
+- Centralização da configuração da API em `core/api_config.dart`.
 
 **O que falta realizar:**
-- Listagem de Aldeias e Eventos na App.
-- Fluxo completo de compra de participações na App.
-- Desenvolvimento do Backoffice Web em Next.js.
+- Visualização de Jogos e Grelhas (especialmente Poio da Vaca) na App.
+- Implementação final do fluxo de compra na App.
+- Setup do projeto de Backoffice Web (Next.js).
 
-**Próxima interação:** Listagem de Aldeias e Eventos na App.
+**Próxima interação:** Listagem de Jogos e Visualização de Grelha (Poio da Vaca).
