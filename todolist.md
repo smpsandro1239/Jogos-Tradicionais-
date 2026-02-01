@@ -50,25 +50,26 @@
 
 ## Próximos Passos (Frontend)
 - [x] Setup Projeto Flutter (Mobile)
-- [ ] Implementar Autenticação no Flutter (Login/Register)
+- [x] Implementar Autenticação no Flutter (Login/Register)
 - [ ] Listagem de Aldeias e Eventos na App
 - [ ] Compra de participações via App
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Backend Core concluído (100%). Setup Mobile iniciado.
+**Status atual:** Autenticação Mobile concluída. Iniciando listagem de conteúdos.
 **Progresso Total Backend:** 100% concluído.
-**Progresso Total Projeto:** ~55% concluído.
+**Progresso Total Projeto:** ~60% concluído.
 
 **O que foi feito nesta etapa:**
-- Inicialização do projeto Flutter em `frontend/mobile`.
-- Configuração de Tema, Cores e SplashScreen.
-- Adição de dependências base (http, provider, secure storage).
-- Atualização da Wishlist com "Localização GPS" e "Galeria de Fotos".
+- Implementação de modelos de dados (User, AuthResponse) no Flutter.
+- Implementação de `AuthService` para comunicação com backend.
+- Gestão de estado de autenticação com `AuthProvider` (Provider + Secure Storage).
+- Criação de ecrãs de Login e Registo com validações.
+- Navegação inteligente baseada no estado de autenticação (Splash -> Login ou Home).
 
 **O que falta realizar:**
-- Desenvolvimento das funcionalidades mobile (Auth, Listagens, Compras).
-- Setup e desenvolvimento do Backoffice Web (Next.js).
-- Integração final com WebSockets (futuro).
+- Listagem de Aldeias e Eventos na App.
+- Fluxo completo de compra de participações na App.
+- Desenvolvimento do Backoffice Web em Next.js.
 
-**Próxima interação:** Implementar Autenticação (Login/Registo) no Flutter.
+**Próxima interação:** Listagem de Aldeias e Eventos na App.
