@@ -8,6 +8,14 @@ import { databaseConfig } from './config/database.config';
 import { UtilizadoresModule } from './utilizadores/utilizadores.module';
 import { AuthModule } from './auth/auth.module';
 import { AldeiasModule } from './aldeias/aldeias.module';
+import { EventosModule } from './eventos/eventos.module';
+import { JogosModule } from './jogos/jogos.module';
+import { ParticipacoesModule } from './participacoes/participacoes.module';
+import { SorteiosModule } from './sorteios/sorteios.module';
+import { AuditoriaModule } from './auditoria/auditoria.module';
+import { EstatisticasModule } from './estatisticas/estatisticas.module';
+import { NotificacoesModule } from './notificacoes/notificacoes.module';
+import { PagamentosModule } from './pagamentos/pagamentos.module';
 
 @Module({
   imports: [
@@ -21,6 +29,14 @@ import { AldeiasModule } from './aldeias/aldeias.module';
     UtilizadoresModule,
     AuthModule,
     AldeiasModule,
+    EventosModule,
+    JogosModule,
+    ParticipacoesModule,
+    SorteiosModule,
+    AuditoriaModule,
+    EstatisticasModule,
+    NotificacoesModule,
+    PagamentosModule,
   ],
   controllers: [AppController],
   providers: [AppService],
