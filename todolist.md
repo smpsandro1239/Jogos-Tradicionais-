@@ -53,25 +53,25 @@
 - [x] Setup Projeto Flutter (Mobile)
 - [x] Implementar Autenticação no Flutter (Login/Register)
 - [x] Listagem de Aldeias e Eventos na App
-- [ ] Listagem de Jogos e Visualização de Grelha (Poio da Vaca)
+- [x] Listagem de Jogos e Visualização de Grelha (Poio da Vaca)
 - [ ] Fluxo de Compra de Participações (App -> Backend)
 - [ ] Setup Projeto Next.js (Backoffice)
 
 ---
-**Status atual:** Listagem de conteúdos mobile concluída. Iniciando lógica de jogos na app.
+**Status atual:** Listagem de jogos e visualização de grelhas integrada.
 **Progresso Total Backend:** 100% concluído.
-**Progresso Total Projeto:** ~65% concluído.
+**Progresso Total Projeto:** ~72% concluído.
 
 **O que foi feito nesta etapa:**
-- Implementação dos modelos `Aldeia` e `Evento` no Flutter.
-- Criação de serviços para integração com a API do backend.
-- Atualização da `HomeScreen` para listar aldeias dinamicamente.
-- Criação da `EventosScreen` para visualizar eventos por aldeia.
-- Centralização da configuração da API em `core/api_config.dart`.
+- Criação do modelo `Jogo` no Flutter.
+- Implementação do `JogoService` para carregar dados da API.
+- Criação do ecrã `JogosScreen` para listar jogos de um evento.
+- Implementação de widget de grelha dinâmico para o jogo "Poio da Vaca".
+- Conexão da navegação entre `EventosScreen` e `JogosScreen`.
 
 **O que falta realizar:**
-- Visualização de Jogos e Grelhas (especialmente Poio da Vaca) na App.
-- Implementação final do fluxo de compra na App.
+- Implementação final do fluxo de compra na App (seleção de quadrado/número e POST para API).
+- Histórico de participações do utilizador na App.
 - Setup do projeto de Backoffice Web (Next.js).
 
-**Próxima interação:** Listagem de Jogos e Visualização de Grelha (Poio da Vaca).
+**Próxima interação:** Fluxo de Compra de Participações (App -> Backend).

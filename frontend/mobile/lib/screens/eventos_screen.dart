@@ -1,3 +1,4 @@
+import 'jogos_screen.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import 'package:intl/intl.dart';
@@ -91,7 +92,7 @@ class _EventosScreenState extends State<EventosScreen> {
                               ),
                             ),
                             onTap: () {
-                              // Navegar para listagem de jogos do evento (Sprint futura)
+                              Navigator.push(context, MaterialPageRoute(builder: (context) => JogosScreen(evento: evento)));
                             },
                           ),
                         );
