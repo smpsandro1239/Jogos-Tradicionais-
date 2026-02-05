@@ -1,5 +1,6 @@
 import 'package:flutter_test/flutter_test.dart';
 import 'package:aldeias_app/models/participacao.dart';
+import 'package:aldeias_app/models/jogo.dart';
 
 void main() {
   group('Participacao Model Tests', () {
@@ -11,7 +12,15 @@ void main() {
         'dados_participacao': {'linha': 5, 'coluna': 5},
         'valor_pago': '2.00',
         'status': 'pago',
-        'created_at': '2023-10-01T12:00:00Z'
+        'created_at': '2023-10-01T12:00:00Z',
+        'jogo': {
+          'id': 'j-1',
+          'tipo': 'poio_vaca',
+          'config': {'linhas': 10, 'colunas': 10},
+          'preco_participacao': '2.00',
+          'estado': 'ativo',
+          'eventoId': 'e-1'
+        }
       };
 
       final p = Participacao.fromJson(json);
@@ -22,6 +31,8 @@ void main() {
       expect(p.valorPago, 2.0);
       expect(p.status, ParticipacaoStatus.pago);
       expect(p.createdAt.year, 2023);
+      expect(p.jogo, isNotNull);
+      expect(p.jogo!.tipo, JogoTipo.poio_vaca);
     });
   });
 }

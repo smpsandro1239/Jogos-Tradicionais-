@@ -17367,3 +17367,43 @@ Continue a conversa
 - Escolha de números da sorte em rifas através de seletores visuais.
 - Identificação em tempo real de posições já ocupadas por outros participantes.
 - Sistema de confirmação de compra com resumo de custos.
+
+### Histórico de Participações
+- Visualização centralizada de todas as participações do utilizador.
+- Detalhes sobre o jogo, coordenadas/números escolhidos e valor pago.
+- Status da participação (Pendente, Pago, Cancelado) com indicadores visuais a cores.
+- Navegação simplificada através de Menu Lateral (Drawer).
+
+---
+
+## 🖥️ Backoffice Web (Next.js) - Funcionalidades Implementadas
+
+### Gestão Administrativa
+- Dashboard com resumo estatístico (Aldeias, Eventos, Angariações).
+- Listagem de Aldeias com suporte para edição e remoção (em desenvolvimento).
+- Autenticação segura com JWT e proteção de rotas.
+
+### Interface Moderna
+- Design responsivo utilizando Tailwind CSS.
+- Sidebar de navegação intuitiva.
+- Estado global de autenticação.
+
+### Monitorização e Gestão Web
+- Listagem detalhada de todos os **Eventos** e **Jogos**.
+- Estatísticas em tempo real no Dashboard (Total de Aldeias, Eventos Ativos, Montante Angariado).
+- Formatação localizada para o mercado português (EUR, Datas).
+
+### CRUD de Eventos e Jogos
+- Gestão completa de **Eventos** (Criação, Edição, Eliminação).
+- Configuração dinâmica de **Jogos** (Poio da Vaca com grelha personalizável, Rifa com número de bilhetes).
+- Interface de gestão intuitiva com Modais e feedback em tempo real.
+
+### Sorteios e Auditoria Web
+- Execução de **Sorteios Determinísticos** via interface administrativa.
+- Visualização detalhada de resultados de sorteios com dados de auditoria (Seed, Hash SHA-256).
+- Registo completo de **Auditoria do Sistema**, permitindo rastrear ações sensíveis.
+
+### Gestão de Utilizadores e Roles
+- Listagem centralizada de utilizadores registados.
+- Controlo de acesso granular (Super Admin, Admin de Aldeia, Utilizador).
+- Atribuição de permissões específicas por Aldeia para administradores locais.
