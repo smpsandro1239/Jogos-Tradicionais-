@@ -17413,3 +17413,35 @@ Continue a conversa
 - Histórico de notificações no dispositivo com marcação de leitura.
 - Registo automático do token do dispositivo no servidor.
 - Badge visual na página inicial indicando notificações pendentes.
+
+---
+
+## 🚀 Guia de Deploy (Vercel & Render)
+
+Este projeto utiliza uma estrutura de monorepo. Siga estas instruções para um deploy correto:
+
+### 🖥️ Backoffice (Next.js) -> Vercel
+1. No painel da **Vercel**, clique em "Add New" -> "Project".
+2. Importe o seu repositório do GitHub.
+3. Na seção "Root Directory", clique em **Edit** e selecione `frontend/backoffice`.
+4. A Vercel detectará automaticamente o framework **Next.js**.
+5. Em "Environment Variables", adicione `NEXT_PUBLIC_API_URL` apontando para o seu backend.
+6. Clique em **Deploy**.
+
+### 📱 Flutter Web -> Vercel (Opcional)
+Se desejar alojar a versão Web da aplicação móvel:
+1. No painel da **Vercel**, adicione um novo projeto.
+2. Defina o "Root Directory" como `frontend/mobile`.
+3. Configure:
+   - **Framework Preset**: Other.
+   - **Build Command**: `flutter/bin/flutter build web --release` (Requer configuração de build personalizada) ou use um artifact gerado por GitHub Actions.
+   - **Output Directory**: `build/web`.
+
+### ⚙️ Backend (NestJS) -> Render
+1. Crie um novo **Web Service** no [Render](https://render.com/).
+2. Conecte o repositório.
+3. **Root Directory**: `backend`.
+4. **Environment**: `Node`.
+5. **Build Command**: `npm install && npm run build`.
+6. **Start Command**: `npm run start:prod`.
+7. Configure as variáveis de ambiente (Base de Dados, JWT, etc.).
