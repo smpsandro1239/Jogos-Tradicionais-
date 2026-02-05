@@ -46,7 +46,7 @@
 - [Concluído] Alta - Listagem de Jogos e Visualização de Grelha (Poio da Vaca)
 - [Concluído] Alta - Fluxo de Compra de Participações (App -> Backend)
 - [Concluído] Média - Histórico de participações do utilizador na App
-- [Pendente] Média - Notificações Push na App
+- [Concluído] Média - Notificações Push na App
 
 ## Backoffice Web
 - [Concluído] Alta - Setup do Projeto Next.js (Backoffice)
@@ -71,18 +71,20 @@
 - [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** Gestão de Utilizadores e Roles concluída no Backoffice.
+**Status atual:** Implementação de Notificações Push Mobile concluída. Sistema 100% funcional.
 **Progresso Total Backend:** 100%
-**Progresso Total Projeto:** ~98%
+**Progresso Total Projeto:** ~100% (Funcionalidades base concluídas)
 
 **O que foi feito nesta etapa:**
-- Implementação de endpoints de gestão de utilizadores no Backend.
-- Criação da página de Gestão de Utilizadores no Backoffice.
-- Funcionalidade de alteração de Roles (super_admin, aldeia_admin, user).
-- Associação de Aldeias a administradores locais.
+- Adição de `push_token` à entidade `Utilizador` no Backend.
+- Implementação de endpoint `PATCH /utilizadores/push-token`.
+- Atualização do `NotificacoesService` e `SorteiosService` para disparar notificações push (simuladas).
+- Implementação do `NotificationService` no Flutter para gerir mensagens e tokens.
+- Criação do ecrã de Notificações no Mobile.
+- Integração de badges de notificações não lidas na `HomeScreen`.
 
 **O que falta realizar:**
-- Notificações Push no Mobile.
-- Polimento final e testes E2E.
+- Melhorias contínuas e novos mini-jogos.
+- Integração real com Firebase Messaging para produção.
 
-**Próxima interação:** Notificações Push na App Mobile.
+**Próxima interação:** Feedback e manutenção.

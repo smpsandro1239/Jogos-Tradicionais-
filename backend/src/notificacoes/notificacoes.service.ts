@@ -16,19 +16,31 @@ export class NotificacoesService {
     return true;
   }
 
-  async notificarVencedor(email: string, nome: string, jogoNome: string, resultado: any) {
+  async notificarVencedor(email: string, nome: string, jogoNome: string, resultado: any, pushToken?: string) {
     const assunto = `Parabéns! Ganhaste no jogo ${jogoNome}`;
     const corpo = `Olá ${nome}, as tuas coordenadas/número foram as vencedoras: ${JSON.stringify(resultado)}. Entra em contacto com a organização!`;
-    return this.enviarEmail(email, assunto, corpo);
+
+    await this.enviarEmail(email, assunto, corpo);
+
+    if (pushToken) {
+      await this.enviarPush(pushToken, '🎉 Ganhaste!', `Parabéns ${nome}! Foste o vencedor do jogo ${jogoNome}.`);
+    }
+
+    return true;
   }
 
-  async notificarSorteioRealizado(participantesEmails: string[], jogoNome: string) {
+  async notificarSorteioRealizado(emails: string[], jogoNome: string, tokens: string[]) {
     const assunto = `Sorteio Realizado: ${jogoNome}`;
     const corpo = `O sorteio do jogo ${jogoNome} já foi realizado. Consulta os resultados na aplicação!`;
 
-    for (const email of participantesEmails) {
+    for (const email of emails) {
       await this.enviarEmail(email, assunto, corpo);
     }
+
+    for (const token of tokens) {
+      await this.enviarPush(token, 'Sorteio Realizado', `O resultado do jogo ${jogoNome} já está disponível.`);
+    }
+
     return true;
   }
 }

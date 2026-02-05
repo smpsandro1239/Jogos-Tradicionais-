@@ -62,7 +62,6 @@ export class SorteiosService {
   }
 
   private calcularResultado(tipo: JogoTipo, config: any, hash: string): any {
-    // Usar os primeiros 8 caracteres do hash para obter um número inteiro grande
     const intValue = parseInt(hash.substring(0, 8), 16);
 
     if (tipo === JogoTipo.RIFA) {
@@ -86,9 +85,9 @@ export class SorteiosService {
 
   private async processarNotificacoes(jogo: Jogo, resultado: any) {
     const participacoesPagas = await this.participacoesService.findAll(jogo.id, ParticipacaoStatus.PAGO);
-    const emails = participacoesPagas.map(p => p.utilizador.email);
+    const emails = [...new Set(participacoesPagas.map(p => p.utilizador.email))];
+    const pushTokens = [...new Set(participacoesPagas.map(p => p.utilizador.push_token).filter(t => t != null))];
 
-    // Identificar vencedor(es)
     const vencedores = participacoesPagas.filter(p => {
       if (jogo.tipo === JogoTipo.RIFA) {
         return p.dados_participacao.numero === resultado.numero;
@@ -98,18 +97,17 @@ export class SorteiosService {
       return false;
     });
 
-    // Notificar vencedores
     for (const v of vencedores) {
       await this.notificacoesService.notificarVencedor(
         v.utilizador.email,
         v.utilizador.nome,
-        jogo.tipo, // Idealmente teríamos o nome do evento/jogo mais descritivo
-        resultado
+        jogo.tipo === JogoTipo.RIFA ? 'Rifa' : 'Poio da Vaca',
+        resultado,
+        v.utilizador.push_token
       );
     }
 
-    // Notificar todos os outros participantes
-    await this.notificacoesService.notificarSorteioRealizado(emails, jogo.tipo);
+    await this.notificacoesService.notificarSorteioRealizado(emails, jogo.tipo === JogoTipo.RIFA ? 'Rifa' : 'Poio da Vaca', pushTokens);
   }
 
   async findOneByJogo(jogoId: string): Promise<Sorteio> {

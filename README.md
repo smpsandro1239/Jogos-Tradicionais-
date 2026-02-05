@@ -17407,3 +17407,9 @@ Continue a conversa
 - Listagem centralizada de utilizadores registados.
 - Controlo de acesso granular (Super Admin, Admin de Aldeia, Utilizador).
 - Atribuição de permissões específicas por Aldeia para administradores locais.
+
+### Notificações Push Mobile
+- Recebimento de alertas em tempo real sobre sorteios realizados.
+- Histórico de notificações no dispositivo com marcação de leitura.
+- Registo automático do token do dispositivo no servidor.
+- Badge visual na página inicial indicando notificações pendentes.

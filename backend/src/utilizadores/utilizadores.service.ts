@@ -35,4 +35,13 @@ export class UtilizadoresService {
     Object.assign(user, data);
     return this.repo.save(user);
   }
+
+  async updatePushToken(id: string, pushToken: string): Promise<Utilizador> {
+    const user = await this.findById(id);
+    if (!user) {
+      throw new NotFoundException(`Utilizador com ID "${id}" não encontrado`);
+    }
+    user.push_token = pushToken;
+    return this.repo.save(user);
+  }
 }

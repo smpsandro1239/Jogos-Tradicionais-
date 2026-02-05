@@ -3,8 +3,10 @@ import 'package:provider/provider.dart';
 import '../core/auth_provider.dart';
 import '../models/aldeia.dart';
 import '../services/aldeia_service.dart';
+import '../services/notification_service.dart';
 import 'eventos_screen.dart';
 import 'minhas_participacoes_screen.dart';
+import 'notificacoes_screen.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
@@ -23,6 +25,7 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     super.initState();
     _loadAldeias();
+    _registerPushToken();
   }
 
   Future<void> _loadAldeias() async {
@@ -43,6 +46,16 @@ class _HomeScreenState extends State<HomeScreen> {
     }
   }
 
+  Future<void> _registerPushToken() async {
+    final auth = context.read<AuthProvider>();
+    final notif = context.read<NotificationService>();
+    if (auth.isAuthenticated && auth.token != null && auth.user != null) {
+      // Simulação de obtenção de token real do dispositivo
+      const mockToken = 'push_token_simulado_123';
+      await notif.registerPushToken(auth.user!.id, mockToken, auth.token!);
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     final auth = Provider.of<AuthProvider>(context);
@@ -51,6 +64,48 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Aldeias Disponíveis'),
+        actions: [
+          Consumer<NotificationService>(
+            builder: (context, service, _) {
+              return Stack(
+                children: [
+                  IconButton(
+                    icon: const Icon(Icons.notifications),
+                    onPressed: () => Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) => const NotificacoesScreen()),
+                    ),
+                  ),
+                  if (service.unreadCount > 0)
+                    Positioned(
+                      right: 8,
+                      top: 8,
+                      child: Container(
+                        padding: const EdgeInsets.all(2),
+                        decoration: BoxDecoration(
+                          color: Colors.red,
+                          borderRadius: BorderRadius.circular(10),
+                        ),
+                        constraints: const BoxConstraints(
+                          minWidth: 16,
+                          minHeight: 16,
+                        ),
+                        child: Text(
+                          '${service.unreadCount}',
+                          style: const TextStyle(
+                            color: Colors.white,
+                            fontSize: 10,
+                            fontWeight: FontWeight.bold,
+                          ),
+                          textAlign: TextAlign.center,
+                        ),
+                      ),
+                    ),
+                ],
+              );
+            },
+          ),
+        ],
       ),
       drawer: Drawer(
         child: Column(
@@ -77,6 +132,27 @@ class _HomeScreenState extends State<HomeScreen> {
                 Navigator.push(
                   context,
                   MaterialPageRoute(builder: (context) => const MinhasParticipacoesScreen()),
+                );
+              },
+            ),
+            ListTile(
+              leading: const Icon(Icons.notifications),
+              title: const Text('Notificações'),
+              trailing: Consumer<NotificationService>(
+                builder: (context, service, _) {
+                  return service.unreadCount > 0
+                    ? CircleAvatar(
+                        radius: 10,
+                        backgroundColor: Colors.red,
+                        child: Text('${service.unreadCount}', style: const TextStyle(fontSize: 10, color: Colors.white)))
+                    : const SizedBox.shrink();
+                }
+              ),
+              onTap: () {
+                Navigator.pop(context);
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(builder: (context) => const NotificacoesScreen()),
                 );
               },
             ),
