@@ -18,6 +18,13 @@ export class EstatisticasController {
     private readonly eventosService: EventosService,
   ) {}
 
+  @Get('global')
+  @Roles(UserRole.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Obter estatísticas globais (Super Admin)' })
+  getGlobalSuper() {
+    return this.estatisticasService.getGlobalSuperAdmin();
+  }
+
   @Get('aldeia/:aldeiaId')
   @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
   @UseGuards(AldeiaGuard)
@@ -42,7 +49,6 @@ export class EstatisticasController {
         return this.estatisticasService.getPorEvento(eventoId);
     }
 
-    // Validar se o evento pertence à aldeia do administrador
     const evento = await this.eventosService.findOne(eventoId);
     if (evento.aldeiaId !== req.user.aldeiaId) {
         throw new ForbiddenException('Não tem permissão para aceder a estatísticas deste evento');

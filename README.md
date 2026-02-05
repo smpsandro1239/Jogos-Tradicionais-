@@ -17387,3 +17387,8 @@ Continue a conversa
 - Design responsivo utilizando Tailwind CSS.
 - Sidebar de navegação intuitiva.
 - Estado global de autenticação.
+
+### Monitorização e Gestão Web
+- Listagem detalhada de todos os **Eventos** e **Jogos**.
+- Estatísticas em tempo real no Dashboard (Total de Aldeias, Eventos Ativos, Montante Angariado).
+- Formatação localizada para o mercado português (EUR, Datas).

@@ -6,24 +6,17 @@ import { Map, Calendar, Trophy } from 'lucide-react';
 
 export default function DashboardPage() {
   const [stats, setStats] = useState({
-    aldeias: 0,
-    eventos: 0,
-    angariado: 0
+    totalAldeias: 0,
+    totalEventosAtivos: 0,
+    totalAngariado: 0
   });
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
     const fetchStats = async () => {
       try {
-        const response = await api.get('/aldeias');
-        const aldeias = response.data;
-
-        // Mocking some other stats for now or fetching if possible
-        setStats({
-          aldeias: aldeias.length,
-          eventos: 0, // Need endpoint for total events
-          angariado: 0
-        });
+        const response = await api.get('/estatisticas/global');
+        setStats(response.data);
       } catch (err) {
         console.error('Erro ao carregar estatísticas', err);
       } finally {
@@ -51,7 +44,7 @@ export default function DashboardPage() {
               </div>
               <div>
                 <h2 className="text-slate-500 text-sm font-medium">Total Aldeias</h2>
-                <p className="text-3xl font-bold mt-1">{stats.aldeias}</p>
+                <p className="text-3xl font-bold mt-1">{stats.totalAldeias}</p>
               </div>
             </div>
           </div>
@@ -63,7 +56,7 @@ export default function DashboardPage() {
               </div>
               <div>
                 <h2 className="text-slate-500 text-sm font-medium">Eventos Ativos</h2>
-                <p className="text-3xl font-bold mt-1">{stats.eventos}</p>
+                <p className="text-3xl font-bold mt-1">{stats.totalEventosAtivos}</p>
               </div>
             </div>
           </div>
@@ -75,7 +68,7 @@ export default function DashboardPage() {
               </div>
               <div>
                 <h2 className="text-slate-500 text-sm font-medium">Total Angariado</h2>
-                <p className="text-3xl font-bold mt-1">{stats.angariado.toLocaleString('pt-PT', { style: 'currency', currency: 'EUR' })}</p>
+                <p className="text-3xl font-bold mt-1">{stats.totalAngariado.toLocaleString('pt-PT', { style: 'currency', currency: 'EUR' })}</p>
               </div>
             </div>
           </div>

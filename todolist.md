@@ -51,9 +51,11 @@
 ## Backoffice Web
 - [Concluído] Alta - Setup do Projeto Next.js (Backoffice)
 - [Concluído] Alta - Implementar Autenticação e Gestão de Sessão
-- [Concluído] Alta - Dashboard com estatísticas base
+- [Concluído] Alta - Dashboard com estatísticas reais (Super Admin)
 - [Concluído] Alta - Listagem de Aldeias
-- [Pendente] Alta - Gestão de Eventos e Jogos (CRUD)
+- [Concluído] Alta - Listagem de Eventos
+- [Concluído] Alta - Listagem de Jogos
+- [Pendente] Alta - CRUD completo de Eventos e Jogos (Criar/Editar)
 - [Pendente] Média - Visualização de Auditoria e Logs
 
 ## Futuros Jogos & Melhorias
@@ -68,20 +70,19 @@
 - [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** Backoffice Web inicializado e funcional.
-**Progresso Total Backend:** 100%
-**Progresso Total Projeto:** ~90%
+**Status atual:** Backoffice com listagens e estatísticas reais implementado.
+**Progresso Total Backend:** 100% (incluindo novos endpoints de estatísticas)
+**Progresso Total Projeto:** ~92%
 
 **O que foi feito nesta etapa:**
-- Setup do projeto Next.js 14 com Tailwind CSS.
-- Implementação de Cliente API com interceptores JWT.
-- Criação de AuthProvider e Hook useAuth para gestão de estado.
-- Desenvolvimento de Sidebar, Layout e Dashboard responsivo.
-- Implementação do ecrã de Listagem de Aldeias.
+- Implementação de listagem de Eventos e Jogos no Backoffice.
+- Criação de endpoint de estatísticas globais no Backend para Super Admin.
+- Atualização do Dashboard com dados reais da API.
+- Refinação de UI no Backoffice com suporte a localização PT-PT para moedas e datas.
 
 **O que falta realizar:**
-- CRUD completo de Eventos e Jogos no Backoffice.
+- Formulários para criação e edição de Eventos e Jogos no Backoffice.
 - Notificações Push no Mobile.
-- Integração Real de Pagamentos.
+- Melhorias visuais e polimento final.
 
-**Próxima interação:** Gestão de Eventos e Jogos no Backoffice.
+**Próxima interação:** CRUD (Criação/Edição) de Eventos e Jogos no Backoffice.
