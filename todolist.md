@@ -53,10 +53,10 @@
 - [Concluído] Alta - Implementar Autenticação e Gestão de Sessão
 - [Concluído] Alta - Dashboard com estatísticas reais (Super Admin)
 - [Concluído] Alta - Listagem de Aldeias
-- [Concluído] Alta - Listagem de Eventos
-- [Concluído] Alta - Listagem de Jogos
-- [Pendente] Alta - CRUD completo de Eventos e Jogos (Criar/Editar)
+- [Concluído] Alta - CRUD completo de Eventos
+- [Concluído] Alta - CRUD completo de Jogos
 - [Pendente] Média - Visualização de Auditoria e Logs
+- [Pendente] Média - Execução de Sorteios via Web
 
 ## Futuros Jogos & Melhorias
 - [Pendente] Baixa - Modo Transmissão ao Vivo (WebSockets)
@@ -70,19 +70,19 @@
 - [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** Backoffice com listagens e estatísticas reais implementado.
-**Progresso Total Backend:** 100% (incluindo novos endpoints de estatísticas)
-**Progresso Total Projeto:** ~92%
+**Status atual:** CRUD de Eventos e Jogos implementado no Backoffice.
+**Progresso Total Backend:** 100%
+**Progresso Total Projeto:** ~95%
 
 **O que foi feito nesta etapa:**
-- Implementação de listagem de Eventos e Jogos no Backoffice.
-- Criação de endpoint de estatísticas globais no Backend para Super Admin.
-- Atualização do Dashboard com dados reais da API.
-- Refinação de UI no Backoffice com suporte a localização PT-PT para moedas e datas.
+- Criação de componente `Modal` reutilizável no Backoffice.
+- Implementação de formulários de criação e edição para Eventos.
+- Implementação de formulários de criação e edição para Jogos com configurações específicas.
+- Integração total com a API para operações de escrita (POST, PATCH, DELETE).
 
 **O que falta realizar:**
-- Formulários para criação e edição de Eventos e Jogos no Backoffice.
+- Execução de sorteios a partir do Backoffice.
 - Notificações Push no Mobile.
-- Melhorias visuais e polimento final.
+- Melhorias na auditoria visual.
 
-**Próxima interação:** CRUD (Criação/Edição) de Eventos e Jogos no Backoffice.
+**Próxima interação:** Execução de Sorteios via Backoffice e Visualização de Auditoria.

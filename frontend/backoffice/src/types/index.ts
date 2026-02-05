@@ -29,7 +29,11 @@ export interface Evento {
 export interface Jogo {
   id: string;
   tipo: 'poio_vaca' | 'rifa';
-  config: Record<string, unknown>;
+  config: {
+    linhas?: number;
+    colunas?: number;
+    total_bilhetes?: number;
+  };
   preco_participacao: number;
   estado: 'ativo' | 'pausado' | 'fechado' | 'terminado';
   eventoId: string;

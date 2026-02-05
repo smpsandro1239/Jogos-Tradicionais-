@@ -17392,3 +17392,8 @@ Continue a conversa
 - Listagem detalhada de todos os **Eventos** e **Jogos**.
 - Estatísticas em tempo real no Dashboard (Total de Aldeias, Eventos Ativos, Montante Angariado).
 - Formatação localizada para o mercado português (EUR, Datas).
+
+### CRUD de Eventos e Jogos
+- Gestão completa de **Eventos** (Criação, Edição, Eliminação).
+- Configuração dinâmica de **Jogos** (Poio da Vaca com grelha personalizável, Rifa com número de bilhetes).
+- Interface de gestão intuitiva com Modais e feedback em tempo real.
