@@ -38,3 +38,21 @@ export interface Jogo {
   estado: 'ativo' | 'pausado' | 'fechado' | 'terminado';
   eventoId: string;
 }
+
+export interface Sorteio {
+  id: string;
+  jogoId: string;
+  seed: string;
+  hash_seed: string;
+  resultado: Record<string, unknown>;
+  created_at: string;
+}
+
+export interface AuditLog {
+  id: string;
+  acao: string;
+  metadados: Record<string, unknown>;
+  utilizadorId: string;
+  aldeiaId?: string;
+  created_at: string;
+}

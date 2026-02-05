@@ -55,8 +55,8 @@
 - [Concluído] Alta - Listagem de Aldeias
 - [Concluído] Alta - CRUD completo de Eventos
 - [Concluído] Alta - CRUD completo de Jogos
-- [Pendente] Média - Visualização de Auditoria e Logs
-- [Pendente] Média - Execução de Sorteios via Web
+- [Em Progresso] Média - Visualização de Auditoria e Logs
+- [Em Progresso] Média - Execução de Sorteios via Web
 
 ## Futuros Jogos & Melhorias
 - [Pendente] Baixa - Modo Transmissão ao Vivo (WebSockets)

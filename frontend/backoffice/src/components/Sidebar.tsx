@@ -2,7 +2,7 @@
 
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { LayoutDashboard, Map, Calendar, Trophy, Users, LogOut } from 'lucide-react';
+import { LayoutDashboard, Map, Calendar, Trophy, Users, LogOut, ShieldCheck } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import { useAuth } from '@/context/AuthContext';
 
@@ -12,6 +12,7 @@ const menuItems = [
   { icon: Calendar, label: 'Eventos', href: '/eventos' },
   { icon: Trophy, label: 'Jogos', href: '/jogos' },
   { icon: Users, label: 'Utilizadores', href: '/utilizadores' },
+  { icon: ShieldCheck, label: 'Auditoria', href: '/auditoria' },
 ];
 
 export default function Sidebar() {
@@ -23,7 +24,7 @@ export default function Sidebar() {
       <div className="p-6 border-b border-slate-800">
         <h1 className="text-xl font-bold text-green-500">Aldeias Admin</h1>
       </div>
-      <nav className="flex-1 p-4 space-y-2 mt-4">
+      <nav className="flex-1 p-4 space-y-2 mt-4 overflow-y-auto">
         {menuItems.map((item) => {
           const Icon = item.icon;
           const isActive = pathname === item.href;

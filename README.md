@@ -17397,3 +17397,8 @@ Continue a conversa
 - Gestão completa de **Eventos** (Criação, Edição, Eliminação).
 - Configuração dinâmica de **Jogos** (Poio da Vaca com grelha personalizável, Rifa com número de bilhetes).
 - Interface de gestão intuitiva com Modais e feedback em tempo real.
+
+### Sorteios e Auditoria Web
+- Execução de **Sorteios Determinísticos** via interface administrativa.
+- Visualização detalhada de resultados de sorteios com dados de auditoria (Seed, Hash SHA-256).
+- Registo completo de **Auditoria do Sistema**, permitindo rastrear ações sensíveis.

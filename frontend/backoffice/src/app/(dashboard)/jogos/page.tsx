@@ -2,18 +2,21 @@
 
 import { useEffect, useState } from 'react';
 import api from '@/lib/api';
-import { Jogo, Evento } from '@/types';
-import { Trophy, Plus, Edit, Trash2, LayoutGrid, Ticket, Loader2 } from 'lucide-react';
+import { Jogo, Evento, Sorteio } from '@/types';
+import { Trophy, Plus, Edit, Trash2, LayoutGrid, Ticket, Loader2, Play, Eye } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Modal from '@/components/Modal';
+import axios from 'axios';
 
 export default function JogosPage() {
   const [jogos, setJogos] = useState<Jogo[]>([]);
   const [eventos, setEventos] = useState<Evento[]>([]);
   const [isLoading, setIsLoading] = useState(true);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isResultModalOpen, setIsResultModalOpen] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [currentJogo, setCurrentJogo] = useState<Partial<Jogo> | null>(null);
+  const [currentSorteio, setCurrentSorteio] = useState<Sorteio | null>(null);
 
   const fetchJogos = async () => {
     try {
@@ -91,6 +94,33 @@ export default function JogosPage() {
     }
   };
 
+  const handleSortear = async (id: string) => {
+    if (!confirm('Deseja realizar o sorteio agora? Esta ação é irreversível.')) return;
+
+    try {
+      const res = await api.post(`/sorteios/${id}`);
+      setCurrentSorteio(res.data);
+      setIsResultModalOpen(true);
+      await fetchJogos();
+    } catch (err: unknown) {
+      if (axios.isAxiosError(err)) {
+        alert(err.response?.data?.message || 'Erro ao realizar sorteio. Verifique se o jogo está fechado e tem participações pagas.');
+      } else {
+        alert('Ocorreu um erro inesperado.');
+      }
+    }
+  };
+
+  const handleVerResultado = async (id: string) => {
+    try {
+      const res = await api.get(`/sorteios/${id}`);
+      setCurrentSorteio(res.data);
+      setIsResultModalOpen(true);
+    } catch (err) {
+      console.error('Erro ao buscar sorteio', err);
+    }
+  };
+
   const getStatusColor = (status: string) => {
     switch (status) {
       case 'ativo': return 'bg-green-100 text-green-700 border-green-200';
@@ -134,7 +164,6 @@ export default function JogosPage() {
                 <th className="px-6 py-4 font-medium">Tipo</th>
                 <th className="px-6 py-4 font-medium">Estado</th>
                 <th className="px-6 py-4 font-medium">Preço</th>
-                <th className="px-6 py-4 font-medium">Configuração</th>
                 <th className="px-6 py-4 font-medium text-right">Ações</th>
               </tr>
             </thead>
@@ -163,11 +192,26 @@ export default function JogosPage() {
                     <td className="px-6 py-4 text-sm text-slate-600 font-medium">
                       {Number(jogo.preco_participacao).toLocaleString('pt-PT', { style: 'currency', currency: 'EUR' })}
                     </td>
-                    <td className="px-6 py-4 text-xs text-slate-500 font-mono">
-                      {JSON.stringify(jogo.config)}
-                    </td>
                     <td className="px-6 py-4 text-right">
                       <div className="flex justify-end gap-2">
+                        {jogo.estado === 'fechado' && (
+                          <button
+                            onClick={() => handleSortear(jogo.id)}
+                            className="p-2 text-green-600 hover:bg-green-50 rounded-lg transition-colors"
+                            title="Realizar Sorteio"
+                          >
+                            <Play size={18} />
+                          </button>
+                        )}
+                        {jogo.estado === 'terminado' && (
+                          <button
+                            onClick={() => handleVerResultado(jogo.id)}
+                            className="p-2 text-blue-600 hover:bg-blue-50 rounded-lg transition-colors"
+                            title="Ver Resultado"
+                          >
+                            <Eye size={18} />
+                          </button>
+                        )}
                         <button
                           onClick={() => handleOpenModal(jogo)}
                           className="p-2 text-slate-400 hover:text-slate-600 transition-colors"
@@ -187,7 +231,7 @@ export default function JogosPage() {
               })}
               {jogos.length === 0 && (
                 <tr>
-                  <td colSpan={5} className="px-6 py-12 text-center text-slate-500">
+                  <td colSpan={4} className="px-6 py-12 text-center text-slate-500">
                     Nenhum jogo encontrado.
                   </td>
                 </tr>
@@ -197,6 +241,7 @@ export default function JogosPage() {
         </div>
       )}
 
+      {/* Modal de Criação/Edição */}
       <Modal
         isOpen={isModalOpen}
         onClose={handleCloseModal}
@@ -247,7 +292,7 @@ export default function JogosPage() {
                 <option value="ativo">Ativo</option>
                 <option value="pausado">Pausado</option>
                 <option value="fechado">Fechado</option>
-                <option value="terminado">Terminado</option>
+                <option value="terminado" disabled>Terminado (via sorteio)</option>
               </select>
             </div>
           </div>
@@ -333,6 +378,54 @@ export default function JogosPage() {
             </button>
           </div>
         </form>
+      </Modal>
+
+      {/* Modal de Resultado do Sorteio */}
+      <Modal
+        isOpen={isResultModalOpen}
+        onClose={() => setIsResultModalOpen(false)}
+        title="Resultado do Sorteio"
+      >
+        {currentSorteio && (
+          <div className="space-y-6">
+            <div className="p-6 bg-green-50 border border-green-200 rounded-2xl text-center">
+              <Trophy size={48} className="mx-auto text-green-600 mb-4" />
+              <h3 className="text-lg font-medium text-green-900">Vencedor Apurado!</h3>
+              <div className="text-4xl font-black text-green-700 mt-2">
+                {currentSorteio.resultado.linha ? (
+                  `L:${currentSorteio.resultado.linha} C:${currentSorteio.resultado.coluna}`
+                ) : (
+                  `Nº ${currentSorteio.resultado.numero}`
+                )}
+              </div>
+            </div>
+
+            <div className="space-y-3">
+              <h4 className="text-sm font-bold text-slate-900 uppercase tracking-widest">Detalhes da Auditoria</h4>
+              <div className="p-4 bg-slate-50 rounded-xl space-y-2 font-mono text-xs overflow-hidden">
+                <div className="flex flex-col">
+                  <span className="text-slate-400">Seed:</span>
+                  <span className="text-slate-700 break-all">{currentSorteio.seed}</span>
+                </div>
+                <div className="flex flex-col">
+                  <span className="text-slate-400">Hash (SHA-256):</span>
+                  <span className="text-slate-700 break-all">{currentSorteio.hash_seed}</span>
+                </div>
+                <div className="flex justify-between border-t border-slate-200 pt-2 mt-2">
+                  <span className="text-slate-400">Data:</span>
+                  <span className="text-slate-700">{new Date(currentSorteio.created_at).toLocaleString()}</span>
+                </div>
+              </div>
+            </div>
+
+            <button
+              onClick={() => setIsResultModalOpen(false)}
+              className="w-full py-3 bg-slate-900 text-white font-bold rounded-xl hover:bg-slate-800 transition-colors"
+            >
+              Fechar
+            </button>
+          </div>
+        )}
       </Modal>
     </div>
   );
