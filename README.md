@@ -17361,3 +17361,9 @@ Continue a conversa
 - Integração com o backend para dados em tempo real.
 
 ---
+
+### Fluxo de Compra Mobile
+- Seleção interativa de coordenadas na grelha do Poio da Vaca.
+- Escolha de números da sorte em rifas através de seletores visuais.
+- Identificação em tempo real de posições já ocupadas por outros participantes.
+- Sistema de confirmação de compra com resumo de custos.
