@@ -1,6 +1,8 @@
 {
-  // outras configs válidas aqui, como rewrites se precisar
   "rewrites": [
-    { "source": "/(.*)", "destination": "/index.html" }
+    {
+      "source": "/(.*)",
+      "destination": "/index.html"
+    }
   ]
 }
