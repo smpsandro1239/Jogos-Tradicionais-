@@ -1,77 +1,80 @@
 # Projeto Jogos Tradicionais - Todolist
 
 ## Sprint 1: Fundações (Infra + Auth + Multi-Aldeia)
-- [x] Setup do Projeto NestJS (Backend)
-- [x] Configurar TypeORM + PostgreSQL
-- [x] Configurar Docker (Database + API)
-- [x] Criar estrutura de módulos base
-- [x] Configurar variáveis de ambiente
-- [x] Módulo de Utilizadores (Entidade, Register, Login, JWT)
-- [x] Roles e Permissões (super_admin, aldeia_admin, user)
-- [x] Módulo de Aldeias (CRUD básico)
-- [x] Guard Multi-Aldeia (AldeiaGuard)
-- [x] Segurança: Public registration role fix
-- [x] Segurança: JWT Secret config fix
-- [x] Qualidade: DTOs e Validação Global
-- [x] Qualidade: Swagger Documentation
+- [Concluído] Alta - Setup do Projeto NestJS (Backend)
+- [Concluído] Alta - Configurar TypeORM + PostgreSQL
+- [Concluído] Alta - Configurar Docker (Database + API)
+- [Concluído] Alta - Criar estrutura de módulos base
+- [Concluído] Alta - Configurar variáveis de ambiente
+- [Concluído] Alta - Módulo de Utilizadores (Entidade, Register, Login, JWT)
+- [Concluído] Alta - Roles e Permissões (super_admin, aldeia_admin, user)
+- [Concluído] Alta - Módulo de Aldeias (CRUD básico)
+- [Concluído] Alta - Guard Multi-Aldeia (AldeiaGuard)
+- [Concluído] Alta - Segurança: Public registration role fix
+- [Concluído] Alta - Segurança: JWT Secret config fix
+- [Concluído] Média - Qualidade: DTOs e Validação Global
+- [Concluído] Média - Qualidade: Swagger Documentation
 
 ## Sprint 2: Eventos + Jogos (Estrutura Base)
-- [x] Módulo de Eventos (Entidade, CRUD por aldeia)
-- [x] Módulo de Jogos (Entidade, Tipos: Poio da Vaca / Rifa)
-- [x] Validações de configuração por tipo de jogo
-- [x] API Pública de Jogos
+- [Concluído] Alta - Módulo de Eventos (Entidade, CRUD por aldeia)
+- [Concluído] Alta - Módulo de Jogos (Entidade, Tipos: Poio da Vaca / Rifa)
+- [Concluído] Alta - Validações de configuração por tipo de jogo
+- [Concluído] Alta - API Pública de Jogos
 
 ## Sprint 3: Participações (Compras) + Regras de Negócio
-- [x] Módulo de Participações
-- [x] Regras de negócio por tipo de jogo (Coordenada única, Número único)
-- [x] API de Participações (Comprar, Listar)
+- [Concluído] Alta - Módulo de Participações
+- [Concluído] Alta - Regras de negócio por tipo de jogo (Coordenada única, Número único)
+- [Concluído] Alta - API de Participações (Comprar, Listar)
 
 ## Sprint 4: Sorteios (Randomização Auditável)
-- [x] Módulo de Sorteios (Geração de seed, Hash SHA-256)
-- [x] Resultado determinístico por tipo de jogo
-- [x] API de Sorteios e Auditoria Pública
+- [Concluído] Alta - Módulo de Sorteios (Geração de seed, Hash SHA-256)
+- [Concluído] Alta - Resultado determinístico por tipo de jogo
+- [Concluído] Alta - API de Sorteios e Auditoria Pública
 
 ## Sprint 5: Melhorias, Auditoria e Notificações
-- [x] Módulo de Auditoria de Ações Sensíveis (Sorteios, Mudanças de Estado, Compras)
-- [x] Exportação de Participantes (CSV robusto para admins)
-- [x] Dashboard de Estatísticas Simples (Total angariado por aldeia/evento)
-- [x] Segurança Multi-Aldeia: Verificação rigorosa de propriedade (Anti-BOLA)
-- [x] Módulo de Notificações (Email/Push para vencedores)
-- [x] Fundação do Módulo de Pagamentos (Webhook simulado para Stripe/IfThenPay)
+- [Concluído] Alta - Módulo de Auditoria de Ações Sensíveis (Sorteios, Mudanças de Estado, Compras)
+- [Concluído] Média - Exportação de Participantes (CSV robusto para admins)
+- [Concluído] Média - Dashboard de Estatísticas Simples (Total angariado por aldeia/evento)
+- [Concluído] Alta - Segurança Multi-Aldeia: Verificação rigorosa de propriedade (Anti-BOLA)
+- [Concluído] Média - Módulo de Notificações (Email/Push para vencedores)
+- [Concluído] Média - Fundação do Módulo de Pagamentos (Webhook simulado para Stripe/IfThenPay)
 
-## Futuros Jogos & Melhorias (Wishlist)
-- [ ] **Modo Transmissão ao Vivo:** Integração com WebSockets para mostrar sorteios em tempo real.
-- [ ] **Localização GPS:** Ver no mapa onde as aldeias se localizam.
-- [ ] **Galeria de Fotos:** Fotos dos eventos passados e dos prémios reais.
-- [ ] **Filtros e Pesquisa:** Pesquisar aldeias por nome ou localização.
-- [ ] **Jogo do Galo/Galinha Digital:** Animação que escolhe um quadrado aleatório.
-- [ ] **Leilão de Cabazes:** Sistema de licitações em tempo real com contagem decrescente.
-- [ ] **Tômbola Digital:** Sorteio imediato após a compra para pequenos prémios.
-- [ ] **Multilingue:** Suporte para Inglês/Francês (para emigrantes).
+## Próximos Passos (Frontend Mobile)
+- [Concluído] Alta - Setup Projeto Flutter (Mobile)
+- [Concluído] Alta - Implementar Autenticação no Flutter (Login/Register)
+- [Concluído] Alta - Listagem de Aldeias e Eventos na App
+- [Concluído] Alta - Listagem de Jogos e Visualização de Grelha (Poio da Vaca)
+- [Concluído] Alta - Fluxo de Compra de Participações (App -> Backend)
+- [Pendente] Média - Histórico de participações do utilizador na App
+- [Pendente] Média - Notificações Push na App
 
-## Próximos Passos (Frontend)
-- [x] Setup Projeto Flutter (Mobile)
-- [x] Implementar Autenticação no Flutter (Login/Register)
-- [x] Listagem de Aldeias e Eventos na App
-- [x] Listagem de Jogos e Visualização de Grelha (Poio da Vaca)
-- [ ] Fluxo de Compra de Participações (App -> Backend)
-- [ ] Setup Projeto Next.js (Backoffice)
+## Próximos Passos (Web & Outros)
+- [Pendente] Alta - Setup Projeto Next.js (Backoffice)
+- [Pendente] Baixa - Modo Transmissão ao Vivo (WebSockets)
+- [Pendente] Baixa - Localização GPS
+- [Pendente] Baixa - Galeria de Fotos
+- [Pendente] Baixa - Jogo do Galo/Galinha Digital
+- [Pendente] Baixa - Leilão de Cabazes
+- [Pendente] Baixa - Tômbola Digital
+- [Pendente] Baixa - Corrida de Caracóis Digital
+- [Pendente] Baixa - Jogo da Malha AR
+- [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** Listagem de jogos e visualização de grelhas integrada.
-**Progresso Total Backend:** 100% concluído.
-**Progresso Total Projeto:** ~72% concluído.
+**Status atual:** Fluxo de compra mobile concluído com visualização de lugares ocupados.
+**Progresso Total Backend:** 100%
+**Progresso Total Projeto:** ~80%
 
 **O que foi feito nesta etapa:**
-- Criação do modelo `Jogo` no Flutter.
-- Implementação do `JogoService` para carregar dados da API.
-- Criação do ecrã `JogosScreen` para listar jogos de um evento.
-- Implementação de widget de grelha dinâmico para o jogo "Poio da Vaca".
-- Conexão da navegação entre `EventosScreen` e `JogosScreen`.
+- Reestruturação do todolist.md para o novo formato [Estado] + Prioridade.
+- Implementação do modelo e serviço de Participação no Flutter.
+- Atualização do backend para permitir listagem pública de dados ocupados por jogo.
+- Implementação da lógica de seleção interativa e compra no JogosScreen.
+- Visualização de lugares ocupados (cinza/riscado) na grelha e rifa.
 
 **O que falta realizar:**
-- Implementação final do fluxo de compra na App (seleção de quadrado/número e POST para API).
-- Histórico de participações do utilizador na App.
+- Visualização das "Minhas Participações" no perfil do utilizador.
+- Notificações quando um sorteio for realizado.
 - Setup do projeto de Backoffice Web (Next.js).
 
-**Próxima interação:** Fluxo de Compra de Participações (App -> Backend).
+**Próxima interação:** Histórico de participações do utilizador na App.

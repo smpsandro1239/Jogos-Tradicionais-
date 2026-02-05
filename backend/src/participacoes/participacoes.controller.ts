@@ -37,14 +37,21 @@ export class ParticipacoesController {
                 throw new ForbiddenException('Não tem permissão para ver as participações deste jogo');
             }
         } else {
-            // Se não for especificado um jogoId, um admin de aldeia só deve ver participações da sua aldeia.
-            // Mas o findAll atual não suporta filtro por aldeiaId diretamente.
-            // Por segurança, obrigamos a passar o jogoId ou devolvemos apenas os da aldeia se implementarmos.
-            // Por agora, para simplificar e garantir segurança, devolvemos erro se não passar jogoId sendo admin de aldeia.
             throw new ForbiddenException('Admin de aldeia deve especificar um jogoId para listar participações');
         }
     }
     return this.participacoesService.findAll(jogoId);
+  }
+
+  @Get('jogo/:jogoId')
+  @Roles(UserRole.USER, UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Ver dados ocupados de um jogo (Público)' })
+  async findOccupiedByJogo(@Param('jogoId') jogoId: string) {
+    const participacoes = await this.participacoesService.findAll(jogoId);
+    return participacoes.map(p => ({
+      dados_participacao: p.dados_participacao,
+      status: p.status
+    }));
   }
 
   @Get('me')
@@ -72,7 +79,6 @@ export class ParticipacoesController {
 
     let csv = 'ID,Utilizador,Email,Dados,Valor Pago,Data\n';
     participacoes.forEach(p => {
-      // Escapar campos para CSV
       const nome = `"${p.utilizador.nome.replace(/"/g, '""')}"`;
       const email = `"${p.utilizador.email.replace(/"/g, '""')}"`;
       const dadosStr = `"${JSON.stringify(p.dados_participacao).replace(/"/g, '""')}"`;
