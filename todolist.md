@@ -45,11 +45,11 @@
 - [Concluído] Alta - Listagem de Aldeias e Eventos na App
 - [Concluído] Alta - Listagem de Jogos e Visualização de Grelha (Poio da Vaca)
 - [Concluído] Alta - Fluxo de Compra de Participações (App -> Backend)
-- [Pendente] Média - Histórico de participações do utilizador na App
+- [Concluído] Média - Histórico de participações do utilizador na App
 - [Pendente] Média - Notificações Push na App
 
 ## Próximos Passos (Web & Outros)
-- [Pendente] Alta - Setup Projeto Next.js (Backoffice)
+- [Em Progresso] Alta - Setup Projeto Next.js (Backoffice)
 - [Pendente] Baixa - Modo Transmissão ao Vivo (WebSockets)
 - [Pendente] Baixa - Localização GPS
 - [Pendente] Baixa - Galeria de Fotos
@@ -61,20 +61,19 @@
 - [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** Fluxo de compra mobile concluído com visualização de lugares ocupados.
+**Status atual:** Histórico de participações mobile concluído. Iniciando setup do Backoffice Web.
 **Progresso Total Backend:** 100%
-**Progresso Total Projeto:** ~80%
+**Progresso Total Projeto:** ~85%
 
 **O que foi feito nesta etapa:**
-- Reestruturação do todolist.md para o novo formato [Estado] + Prioridade.
-- Implementação do modelo e serviço de Participação no Flutter.
-- Atualização do backend para permitir listagem pública de dados ocupados por jogo.
-- Implementação da lógica de seleção interativa e compra no JogosScreen.
-- Visualização de lugares ocupados (cinza/riscado) na grelha e rifa.
+- Atualização do modelo Participacao no Flutter para suportar dados do jogo.
+- Implementação do ecrã MinhasParticipacoesScreen para consulta de histórico.
+- Adição de um Drawer na HomeScreen para melhor navegação e gestão de perfil.
+- Melhoria visual nos chips de status (Cores para Pago, Pendente, Cancelado).
 
 **O que falta realizar:**
-- Visualização das "Minhas Participações" no perfil do utilizador.
-- Notificações quando um sorteio for realizado.
 - Setup do projeto de Backoffice Web (Next.js).
+- Implementação das Notificações Push na App.
+- Desenvolvimento de novos jogos interativos (Corrida de caracóis, etc).
 
-**Próxima interação:** Histórico de participações do utilizador na App.
+**Próxima interação:** Setup do Projeto Next.js (Backoffice).

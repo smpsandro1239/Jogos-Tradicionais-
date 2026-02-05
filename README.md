@@ -17367,3 +17367,9 @@ Continue a conversa
 - Escolha de números da sorte em rifas através de seletores visuais.
 - Identificação em tempo real de posições já ocupadas por outros participantes.
 - Sistema de confirmação de compra com resumo de custos.
+
+### Histórico de Participações
+- Visualização centralizada de todas as participações do utilizador.
+- Detalhes sobre o jogo, coordenadas/números escolhidos e valor pago.
+- Status da participação (Pendente, Pago, Cancelado) com indicadores visuais a cores.
+- Navegação simplificada através de Menu Lateral (Drawer).

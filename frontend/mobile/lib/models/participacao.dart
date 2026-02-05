@@ -1,3 +1,5 @@
+import 'jogo.dart';
+
 enum ParticipacaoStatus {
   pendente,
   pago,
@@ -12,6 +14,7 @@ class Participacao {
   final double valorPago;
   final ParticipacaoStatus status;
   final DateTime createdAt;
+  final Jogo? jogo;
 
   Participacao({
     required this.id,
@@ -21,6 +24,7 @@ class Participacao {
     required this.valorPago,
     required this.status,
     required this.createdAt,
+    this.jogo,
   });
 
   factory Participacao.fromJson(Map<String, dynamic> json) {
@@ -35,6 +39,7 @@ class Participacao {
         orElse: () => ParticipacaoStatus.pendente,
       ),
       createdAt: DateTime.parse(json['created_at']),
+      jogo: json['jogo'] != null ? Jogo.fromJson(json['jogo']) : null,
     );
   }
 }
