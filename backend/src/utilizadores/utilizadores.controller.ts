@@ -1,4 +1,4 @@
-import { Controller, Get, Body, Patch, Param, UseGuards } from '@nestjs/common';
+import { Controller, Get, Body, Patch, Param, UseGuards, Request } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { UtilizadoresService } from './utilizadores.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -18,6 +18,13 @@ export class UtilizadoresController {
   @ApiOperation({ summary: 'Listar todos os utilizadores (Super Admin)' })
   findAll() {
     return this.utilizadoresService.findAll();
+  }
+
+  @Patch('push-token')
+  @Roles(UserRole.USER, UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
+  @ApiOperation({ summary: 'Atualizar o push token do utilizador autenticado' })
+  updatePushToken(@Request() req, @Body('pushToken') pushToken: string) {
+    return this.utilizadoresService.updatePushToken(req.user.id, pushToken);
   }
 
   @Patch(':id')

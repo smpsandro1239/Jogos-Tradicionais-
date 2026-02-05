@@ -39,16 +39,16 @@
 - [Concluído] Média - Módulo de Notificações (Email/Push para vencedores)
 - [Concluído] Média - Fundação do Módulo de Pagamentos (Webhook simulado para Stripe/IfThenPay)
 
-## Frontend Mobile
+## Frontend Mobile (Flutter)
 - [Concluído] Alta - Setup Projeto Flutter (Mobile)
 - [Concluído] Alta - Implementar Autenticação no Flutter (Login/Register)
 - [Concluído] Alta - Listagem de Aldeias e Eventos na App
 - [Concluído] Alta - Listagem de Jogos e Visualização de Grelha (Poio da Vaca)
 - [Concluído] Alta - Fluxo de Compra de Participações (App -> Backend)
 - [Concluído] Média - Histórico de participações do utilizador na App
-- [Pendente] Média - Notificações Push na App
+- [Concluído] Média - Notificações Push na App
 
-## Backoffice Web
+## Backoffice Web (Next.js)
 - [Concluído] Alta - Setup do Projeto Next.js (Backoffice)
 - [Concluído] Alta - Implementar Autenticação e Gestão de Sessão
 - [Concluído] Alta - Dashboard com estatísticas reais (Super Admin)
@@ -58,6 +58,11 @@
 - [Concluído] Média - Visualização de Auditoria e Logs
 - [Concluído] Média - Execução de Sorteios via Web
 - [Concluído] Alta - Gestão de Utilizadores e Roles
+
+## DevOps & Deploy
+- [Concluído] Alta - Configuração de Docker para Backend
+- [Concluído] Média - Configuração de Deploy para Vercel (Frontend)
+- [Pendente] Média - Configuração de Deploy para Render (Backend)
 
 ## Futuros Jogos & Melhorias
 - [Pendente] Baixa - Modo Transmissão ao Vivo (WebSockets)
@@ -71,18 +76,17 @@
 - [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** Gestão de Utilizadores e Roles concluída no Backoffice.
+**Status atual:** Configurando deploy para Vercel e Render.
 **Progresso Total Backend:** 100%
-**Progresso Total Projeto:** ~98%
+**Progresso Total Projeto:** ~99% (Fase final de DevOps)
 
 **O que foi feito nesta etapa:**
-- Implementação de endpoints de gestão de utilizadores no Backend.
-- Criação da página de Gestão de Utilizadores no Backoffice.
-- Funcionalidade de alteração de Roles (super_admin, aldeia_admin, user).
-- Associação de Aldeias a administradores locais.
+- Criação de `vercel.json` na raiz para suporte a monorepo.
+- Definição das instruções de Root Directory para a Vercel.
+- Atualização do README com guia de deploy.
 
 **O que falta realizar:**
-- Notificações Push no Mobile.
-- Polimento final e testes E2E.
+- Validação final do deploy backend.
+- Pequenos ajustes de UI/UX.
 
-**Próxima interação:** Notificações Push na App Mobile.
+**Próxima interação:** Finalização de DevOps e suporte ao deploy.

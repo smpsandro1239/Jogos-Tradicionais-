@@ -40,4 +40,8 @@ export class Utilizador {
   @ApiProperty({ type: () => Aldeia, required: false })
   @ManyToOne(() => Aldeia, { nullable: true })
   aldeia: Aldeia;
+
+  @ApiProperty({ required: false })
+  @Column({ nullable: true })
+  push_token: string;
 }
