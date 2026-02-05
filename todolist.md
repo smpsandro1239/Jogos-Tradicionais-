@@ -48,6 +48,9 @@
 - [ ] **Leilão de Cabazes:** Sistema de licitações em tempo real com contagem decrescente.
 - [ ] **Tômbola Digital:** Sorteio imediato após a compra para pequenos prémios.
 - [ ] **Multilingue:** Suporte para Inglês/Francês (para emigrantes).
+- [ ] **Corrida de Caracóis Digital:** Simulação de corrida baseada em participações.
+- [ ] **Jogo da Malha com Realidade Aumentada:** Uso da câmara para simular o lançamento da malha.
+- [ ] **Sorteio de Cabazes com Peso Real:** Integração com balanças IoT para sorteios baseados em peso exato.
 
 ## Próximos Passos (Frontend)
 - [x] Setup Projeto Flutter (Mobile)

@@ -17343,3 +17343,21 @@ Se quiseres, posso agora gerar:
 
 Continue a conversa
 
+
+---
+
+## 📱 App Mobile - Funcionalidades Implementadas
+
+### Listagem de Jogos
+- Visualização de todos os jogos associados a um evento.
+- Suporte para múltiplos tipos de jogos: **Poio da Vaca** e **Rifas**.
+
+### Grelha Dinâmica (Poio da Vaca)
+- Grelha interativa gerada dinamicamente com base na configuração do jogo (ex: 10x10, 20x20).
+- Identificação visual de coordenadas (Linha, Coluna).
+
+### Navegação Fluida
+- Fluxo completo desde a seleção da Aldeia -> Evento -> Jogo.
+- Integração com o backend para dados em tempo real.
+
+---
