@@ -39,7 +39,7 @@
 - [Concluído] Média - Módulo de Notificações (Email/Push para vencedores)
 - [Concluído] Média - Fundação do Módulo de Pagamentos (Webhook simulado para Stripe/IfThenPay)
 
-## Próximos Passos (Frontend Mobile)
+## Frontend Mobile
 - [Concluído] Alta - Setup Projeto Flutter (Mobile)
 - [Concluído] Alta - Implementar Autenticação no Flutter (Login/Register)
 - [Concluído] Alta - Listagem de Aldeias e Eventos na App
@@ -48,8 +48,15 @@
 - [Concluído] Média - Histórico de participações do utilizador na App
 - [Pendente] Média - Notificações Push na App
 
-## Próximos Passos (Web & Outros)
-- [Em Progresso] Alta - Setup Projeto Next.js (Backoffice)
+## Backoffice Web
+- [Concluído] Alta - Setup do Projeto Next.js (Backoffice)
+- [Concluído] Alta - Implementar Autenticação e Gestão de Sessão
+- [Concluído] Alta - Dashboard com estatísticas base
+- [Concluído] Alta - Listagem de Aldeias
+- [Pendente] Alta - Gestão de Eventos e Jogos (CRUD)
+- [Pendente] Média - Visualização de Auditoria e Logs
+
+## Futuros Jogos & Melhorias
 - [Pendente] Baixa - Modo Transmissão ao Vivo (WebSockets)
 - [Pendente] Baixa - Localização GPS
 - [Pendente] Baixa - Galeria de Fotos
@@ -61,19 +68,20 @@
 - [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** Histórico de participações mobile concluído. Iniciando setup do Backoffice Web.
+**Status atual:** Backoffice Web inicializado e funcional.
 **Progresso Total Backend:** 100%
-**Progresso Total Projeto:** ~85%
+**Progresso Total Projeto:** ~90%
 
 **O que foi feito nesta etapa:**
-- Atualização do modelo Participacao no Flutter para suportar dados do jogo.
-- Implementação do ecrã MinhasParticipacoesScreen para consulta de histórico.
-- Adição de um Drawer na HomeScreen para melhor navegação e gestão de perfil.
-- Melhoria visual nos chips de status (Cores para Pago, Pendente, Cancelado).
+- Setup do projeto Next.js 14 com Tailwind CSS.
+- Implementação de Cliente API com interceptores JWT.
+- Criação de AuthProvider e Hook useAuth para gestão de estado.
+- Desenvolvimento de Sidebar, Layout e Dashboard responsivo.
+- Implementação do ecrã de Listagem de Aldeias.
 
 **O que falta realizar:**
-- Setup do projeto de Backoffice Web (Next.js).
-- Implementação das Notificações Push na App.
-- Desenvolvimento de novos jogos interativos (Corrida de caracóis, etc).
+- CRUD completo de Eventos e Jogos no Backoffice.
+- Notificações Push no Mobile.
+- Integração Real de Pagamentos.
 
-**Próxima interação:** Setup do Projeto Next.js (Backoffice).
+**Próxima interação:** Gestão de Eventos e Jogos no Backoffice.

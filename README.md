@@ -17373,3 +17373,17 @@ Continue a conversa
 - Detalhes sobre o jogo, coordenadas/números escolhidos e valor pago.
 - Status da participação (Pendente, Pago, Cancelado) com indicadores visuais a cores.
 - Navegação simplificada através de Menu Lateral (Drawer).
+
+---
+
+## 🖥️ Backoffice Web (Next.js) - Funcionalidades Implementadas
+
+### Gestão Administrativa
+- Dashboard com resumo estatístico (Aldeias, Eventos, Angariações).
+- Listagem de Aldeias com suporte para edição e remoção (em desenvolvimento).
+- Autenticação segura com JWT e proteção de rotas.
+
+### Interface Moderna
+- Design responsivo utilizando Tailwind CSS.
+- Sidebar de navegação intuitiva.
+- Estado global de autenticação.
