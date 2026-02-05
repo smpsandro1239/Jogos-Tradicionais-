@@ -24,27 +24,30 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.10.x'   # compatível com teu sdk: ^3.10.7
+          flutter-version: '3.24.x'   # ou '3.22.x' / 'stable' — mas 3.24.x garante Dart ~3.5+ (compatível com ^3.10.7)
           channel: 'stable'
 
-      - name: Install Flutter dependencies
+      - name: Show Flutter version (debug)
+        run: flutter --version
+
+      - name: Install dependencies
         run: flutter pub get
         working-directory: frontend/mobile
 
-      - name: Build Flutter for Web
-        run: flutter build web --release --base-href "/Jogos-Tradicionais-/"   # importante: ajusta ao nome do repo!
+      - name: Build Flutter Web
+        run: flutter build web --release --base-href "/Jogos-Tradicionais-/"
         working-directory: frontend/mobile
 
-      - name: Add .nojekyll (evita conflitos com Jekyll)
+      - name: Add .nojekyll to prevent Jekyll processing
         run: touch frontend/mobile/build/web/.nojekyll
 
       - name: Setup GitHub Pages
         uses: actions/configure-pages@v5
 
-      - name: Upload artifact
+      - name: Upload artifact for Pages
         uses: actions/upload-pages-artifact@v3
         with:
-          path: frontend/mobile/build/web   # isso sobe o build completo com index.html + JS + assets
+          path: frontend/mobile/build/web
 
   deploy:
     environment:
