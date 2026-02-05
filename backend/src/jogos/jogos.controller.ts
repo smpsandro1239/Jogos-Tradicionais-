@@ -1,5 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Request } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Query,
+  Request,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { JogosService } from './jogos.service';
 import { CreateJogoDto } from './dto/create-jogo.dto';
 import { UpdateJogoDto } from './dto/update-jogo.dto';
@@ -40,9 +56,19 @@ export class JogosController {
   @UseGuards(JwtAuthGuard, RolesGuard)
   @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Atualizar um jogo' })
-  update(@Param('id') id: string, @Body() updateJogoDto: UpdateJogoDto, @Request() req) {
-    const userAldeiaId = req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
-    return this.jogosService.update(id, updateJogoDto, req.user.id, userAldeiaId);
+  update(
+    @Param('id') id: string,
+    @Body() updateJogoDto: UpdateJogoDto,
+    @Request() req,
+  ) {
+    const userAldeiaId =
+      req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
+    return this.jogosService.update(
+      id,
+      updateJogoDto,
+      req.user.id,
+      userAldeiaId,
+    );
   }
 
   @Delete(':id')
@@ -51,7 +77,8 @@ export class JogosController {
   @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Eliminar um jogo' })
   remove(@Param('id') id: string, @Request() req) {
-    const userAldeiaId = req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
+    const userAldeiaId =
+      req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
     return this.jogosService.remove(id, userAldeiaId);
   }
 }

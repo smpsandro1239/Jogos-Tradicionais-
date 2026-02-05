@@ -1,7 +1,10 @@
 import { Injectable, Logger, NotFoundException } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Participacao, ParticipacaoStatus } from '../participacoes/participacao.entity';
+import {
+  Participacao,
+  ParticipacaoStatus,
+} from '../participacoes/participacao.entity';
 import { AuditoriaService } from '../auditoria/auditoria.service';
 
 @Injectable()
@@ -21,7 +24,9 @@ export class PagamentosService {
     });
 
     if (!participacao) {
-      throw new NotFoundException(`Participação ${participacaoId} não encontrada`);
+      throw new NotFoundException(
+        `Participação ${participacaoId} não encontrada`,
+      );
     }
 
     if (participacao.status === ParticipacaoStatus.PAGO) {
@@ -30,17 +35,22 @@ export class PagamentosService {
     }
 
     participacao.status = ParticipacaoStatus.PAGO;
-    const participacaoSalva = await this.participacoesRepository.save(participacao);
+    const participacaoSalva =
+      await this.participacoesRepository.save(participacao);
 
     // Registar na auditoria
     await this.auditoriaService.log(
       'PAGAMENTO_CONFIRMADO',
       { participacaoId, transactionId, valor: participacao.valor_pago },
       participacao.utilizadorId,
-      participacao.jogo.evento ? (participacao.jogo.evento as any).aldeiaId : undefined,
+      participacao.jogo.evento
+        ? (participacao.jogo.evento as any).aldeiaId
+        : undefined,
     );
 
-    this.logger.log(`Pagamento confirmado para a participação ${participacaoId}. ID Transação: ${transactionId}`);
+    this.logger.log(
+      `Pagamento confirmado para a participação ${participacaoId}. ID Transação: ${transactionId}`,
+    );
 
     return participacaoSalva;
   }
@@ -51,11 +61,14 @@ export class PagamentosService {
     });
 
     if (!participacao) {
-      throw new NotFoundException(`Participação ${participacaoId} não encontrada`);
+      throw new NotFoundException(
+        `Participação ${participacaoId} não encontrada`,
+      );
     }
 
     participacao.status = ParticipacaoStatus.CANCELADO;
-    const participacaoSalva = await this.participacoesRepository.save(participacao);
+    const participacaoSalva =
+      await this.participacoesRepository.save(participacao);
 
     await this.auditoriaService.log(
       'PARTICIPACAO_CANCELADA',

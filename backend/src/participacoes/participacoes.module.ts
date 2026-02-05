@@ -6,10 +6,7 @@ import { Participacao } from './participacao.entity';
 import { JogosModule } from '../jogos/jogos.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Participacao]),
-    JogosModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Participacao]), JogosModule],
   controllers: [ParticipacoesController],
   providers: [ParticipacoesService],
   exports: [ParticipacoesService],

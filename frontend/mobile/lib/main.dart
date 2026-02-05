@@ -3,6 +3,7 @@ import 'package:provider/provider.dart';
 import 'core/app_theme.dart';
 import 'core/auth_provider.dart';
 import 'services/notification_service.dart';
+import 'services/socket_service.dart';
 import 'screens/splash_screen.dart';
 import 'screens/login_screen.dart';
 import 'screens/register_screen.dart';
@@ -14,6 +15,19 @@ void main() {
       providers: [
         ChangeNotifierProvider(create: (_) => AuthProvider()..tryAutoLogin()),
         ChangeNotifierProvider(create: (_) => NotificationService()),
+        ProxyProvider2<AuthProvider, NotificationService, SocketService>(
+          update: (_, auth, notif, prev) {
+            final service = prev ?? SocketService(notif);
+            if (auth.isAuthenticated) {
+              // Conectar se estiver autenticado.
+              // Se não tiver aldeiaId no payload, pode usar 'global'
+              service.connect(auth.userPayload?['aldeiaId'] ?? 'global');
+            } else {
+              service.disconnect();
+            }
+            return service;
+          },
+        ),
       ],
       child: const AldeiasApp(),
     ),

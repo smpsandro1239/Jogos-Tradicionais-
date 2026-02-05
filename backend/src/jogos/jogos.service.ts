@@ -1,4 +1,9 @@
-import { Injectable, NotFoundException, BadRequestException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Jogo, JogoTipo } from './jogo.entity';
@@ -17,11 +22,21 @@ export class JogosService {
   private validateConfig(tipo: JogoTipo, config: any) {
     if (tipo === JogoTipo.POIO_VACA) {
       if (!config.linhas || !config.colunas) {
-        throw new BadRequestException('Configuração do Poio da Vaca deve incluir "linhas" e "colunas"');
+        throw new BadRequestException(
+          'Configuração do Poio da Vaca deve incluir "linhas" e "colunas"',
+        );
       }
     } else if (tipo === JogoTipo.RIFA) {
       if (!config.total_bilhetes) {
-        throw new BadRequestException('Configuração da Rifa deve incluir "total_bilhetes"');
+        throw new BadRequestException(
+          'Configuração da Rifa deve incluir "total_bilhetes"',
+        );
+      }
+    } else if (tipo === JogoTipo.CORRIDA_CARACOIS) {
+      if (!config.num_caracois) {
+        throw new BadRequestException(
+          'Configuração da Corrida de Caracóis deve incluir "num_caracois"',
+        );
       }
     }
   }
@@ -40,18 +55,30 @@ export class JogosService {
   }
 
   async findOne(id: string): Promise<Jogo> {
-    const jogo = await this.jogosRepository.findOne({ where: { id }, relations: ['evento'] });
+    const jogo = await this.jogosRepository.findOne({
+      where: { id },
+      relations: ['evento'],
+    });
     if (!jogo) {
       throw new NotFoundException(`Jogo com ID "${id}" não encontrado`);
     }
     return jogo;
   }
 
-  async update(id: string, updateJogoDto: UpdateJogoDto, utilizadorId?: string, userAldeiaId?: string): Promise<Jogo> {
+  async update(
+    id: string,
+    updateJogoDto: UpdateJogoDto,
+    utilizadorId?: string,
+    userAldeiaId?: string,
+  ): Promise<Jogo> {
     const jogo = await this.findOne(id);
 
-    if (userAldeiaId && jogo.evento && (jogo.evento as any).aldeiaId !== userAldeiaId) {
-        throw new ForbiddenException('Não tem permissão para alterar este jogo');
+    if (
+      userAldeiaId &&
+      jogo.evento &&
+      (jogo.evento as any).aldeiaId !== userAldeiaId
+    ) {
+      throw new ForbiddenException('Não tem permissão para alterar este jogo');
     }
 
     const estadoAntigo = jogo.estado;
@@ -80,8 +107,12 @@ export class JogosService {
   async remove(id: string, userAldeiaId?: string): Promise<void> {
     const jogo = await this.findOne(id);
 
-    if (userAldeiaId && jogo.evento && (jogo.evento as any).aldeiaId !== userAldeiaId) {
-        throw new ForbiddenException('Não tem permissão para eliminar este jogo');
+    if (
+      userAldeiaId &&
+      jogo.evento &&
+      (jogo.evento as any).aldeiaId !== userAldeiaId
+    ) {
+      throw new ForbiddenException('Não tem permissão para eliminar este jogo');
     }
 
     await this.jogosRepository.remove(jogo);

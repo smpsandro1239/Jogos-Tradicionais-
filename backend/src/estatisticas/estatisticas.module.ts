@@ -7,10 +7,7 @@ import { Evento } from '../eventos/evento.entity';
 import { EventosModule } from '../eventos/eventos.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Participacao, Evento]),
-    EventosModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Participacao, Evento]), EventosModule],
   controllers: [EstatisticasController],
   providers: [EstatisticasService],
 })

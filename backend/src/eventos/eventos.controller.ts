@@ -1,5 +1,21 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete, UseGuards, Query, Request } from '@nestjs/common';
-import { ApiTags, ApiOperation, ApiResponse, ApiBearerAuth } from '@nestjs/swagger';
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  UseGuards,
+  Query,
+  Request,
+} from '@nestjs/common';
+import {
+  ApiTags,
+  ApiOperation,
+  ApiResponse,
+  ApiBearerAuth,
+} from '@nestjs/swagger';
 import { EventosService } from './eventos.service';
 import { CreateEventoDto } from './dto/create-evento.dto';
 import { UpdateEventoDto } from './dto/update-evento.dto';
@@ -40,8 +56,13 @@ export class EventosController {
   @Patch(':id')
   @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Atualizar um evento' })
-  async update(@Param('id') id: string, @Body() updateEventoDto: UpdateEventoDto, @Request() req) {
-    const userAldeiaId = req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
+  async update(
+    @Param('id') id: string,
+    @Body() updateEventoDto: UpdateEventoDto,
+    @Request() req,
+  ) {
+    const userAldeiaId =
+      req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
     return this.eventosService.update(id, updateEventoDto, userAldeiaId);
   }
 
@@ -49,7 +70,8 @@ export class EventosController {
   @Roles(UserRole.ALDEIA_ADMIN, UserRole.SUPER_ADMIN)
   @ApiOperation({ summary: 'Eliminar um evento' })
   remove(@Param('id') id: string, @Request() req) {
-    const userAldeiaId = req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
+    const userAldeiaId =
+      req.user.role === UserRole.ALDEIA_ADMIN ? req.user.aldeiaId : undefined;
     return this.eventosService.remove(id, userAldeiaId);
   }
 }

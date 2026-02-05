@@ -22,7 +22,8 @@ import { JwtStrategy } from './strategies/jwt.strategy';
         return {
           secret,
           signOptions: {
-            expiresIn: (configService.get<string>('jwt.expiresIn') || '7d') as any,
+            expiresIn: (configService.get<string>('jwt.expiresIn') ||
+              '7d') as any,
           },
         };
       },

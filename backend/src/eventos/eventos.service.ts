@@ -1,4 +1,8 @@
-import { Injectable, NotFoundException, ForbiddenException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  ForbiddenException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Evento } from './evento.entity';
@@ -16,7 +20,9 @@ export class EventosService {
     const evento = this.eventosRepository.create({
       ...createEventoDto,
       data_inicio: new Date(createEventoDto.data_inicio),
-      data_fim: createEventoDto.data_fim ? new Date(createEventoDto.data_fim) : undefined,
+      data_fim: createEventoDto.data_fim
+        ? new Date(createEventoDto.data_fim)
+        : undefined,
     } as any) as unknown as Evento;
     return await this.eventosRepository.save(evento);
   }
@@ -41,11 +47,17 @@ export class EventosService {
     return evento;
   }
 
-  async update(id: string, updateEventoDto: UpdateEventoDto, userAldeiaId?: string): Promise<Evento> {
+  async update(
+    id: string,
+    updateEventoDto: UpdateEventoDto,
+    userAldeiaId?: string,
+  ): Promise<Evento> {
     const evento = await this.findOne(id);
 
     if (userAldeiaId && evento.aldeiaId !== userAldeiaId) {
-      throw new ForbiddenException('Não tem permissão para alterar este evento');
+      throw new ForbiddenException(
+        'Não tem permissão para alterar este evento',
+      );
     }
 
     const updateData = { ...updateEventoDto };
@@ -65,7 +77,9 @@ export class EventosService {
     const evento = await this.findOne(id);
 
     if (userAldeiaId && evento.aldeiaId !== userAldeiaId) {
-      throw new ForbiddenException('Não tem permissão para eliminar este evento');
+      throw new ForbiddenException(
+        'Não tem permissão para eliminar este evento',
+      );
     }
 
     await this.eventosRepository.remove(evento);

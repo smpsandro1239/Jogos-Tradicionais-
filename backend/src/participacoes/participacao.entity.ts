@@ -1,4 +1,12 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, CreateDateColumn, UpdateDateColumn, Unique } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+  Unique,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Jogo } from '../jogos/jogo.entity';
 import { Utilizador } from '../utilizadores/utilizador.entity';
@@ -32,7 +40,10 @@ export class Participacao {
   @Column()
   utilizadorId: string;
 
-  @ApiProperty({ description: 'Dados específicos da participação (ex: {linha: 1, coluna: 2} ou {numero: 5})' })
+  @ApiProperty({
+    description:
+      'Dados específicos da participação (ex: {linha: 1, coluna: 2} ou {numero: 5})',
+  })
   @Column({ type: 'jsonb' })
   dados_participacao: any;
 

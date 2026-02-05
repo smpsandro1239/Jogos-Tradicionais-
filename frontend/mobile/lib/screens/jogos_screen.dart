@@ -62,7 +62,7 @@ class _JogosScreenState extends State<JogosScreen> {
   Future<void> _participar(Jogo jogo) async {
     if (_selectedJogoId != jogo.id || _selectedData == null) {
       ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text('Por favor, selecione uma coordenada ou número.')),
+        const SnackBar(content: Text('Por favor, selecione um caracol, coordenada ou número.')),
       );
       return;
     }
@@ -71,7 +71,7 @@ class _JogosScreenState extends State<JogosScreen> {
       context: context,
       builder: (context) => AlertDialog(
         title: const Text('Confirmar Participação'),
-        content: Text('Deseja participar no jogo ${jogo.tipo == JogoTipo.poio_vaca ? "Poio da Vaca" : "Rifa"} com os dados $_selectedData?\n\nPreço: ${jogo.precoParticipacao}€'),
+        content: Text('Deseja participar no jogo ${this._getTipoLabel(jogo.tipo)} com os dados $_selectedData?\n\nPreço: ${jogo.precoParticipacao}€'),
         actions: [
           TextButton(onPressed: () => Navigator.pop(context, false), child: const Text('Cancelar')),
           ElevatedButton(onPressed: () => Navigator.pop(context, true), child: const Text('Confirmar')),
@@ -115,6 +115,14 @@ class _JogosScreenState extends State<JogosScreen> {
     }
   }
 
+  String _getTipoLabel(JogoTipo tipo) {
+    switch (tipo) {
+      case JogoTipo.poio_vaca: return 'Poio da Vaca';
+      case JogoTipo.rifa: return 'Rifa';
+      case JogoTipo.corrida_caracois: return 'Corrida de Caracóis';
+    }
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -140,11 +148,12 @@ class _JogosScreenState extends State<JogosScreen> {
                             child: ExpansionTile(
                               initiallyExpanded: index == 0,
                               leading: Icon(
-                                jogo.tipo == JogoTipo.poio_vaca ? Icons.grid_on : Icons.confirmation_number,
+                                jogo.tipo == JogoTipo.poio_vaca ? Icons.grid_on :
+                                (jogo.tipo == JogoTipo.rifa ? Icons.confirmation_number : Icons.directions_run),
                                 color: Colors.green,
                               ),
                               title: Text(
-                                jogo.tipo == JogoTipo.poio_vaca ? 'Poio da Vaca' : 'Rifa',
+                                _getTipoLabel(jogo.tipo),
                                 style: const TextStyle(fontWeight: FontWeight.bold),
                               ),
                               subtitle: Text('Preço: ${jogo.precoParticipacao}€ | Estado: ${jogo.estado.name.toUpperCase()}'),
@@ -170,6 +179,20 @@ class _JogosScreenState extends State<JogosScreen> {
                                     child: RifaSelector(
                                       jogo: jogo,
                                       occupied: occupied,
+                                      selectedData: _selectedJogoId == jogo.id ? _selectedData : null,
+                                      onSelect: (data) {
+                                        setState(() {
+                                          _selectedJogoId = jogo.id;
+                                          _selectedData = data;
+                                        });
+                                      },
+                                    ),
+                                  )
+                                else if (jogo.tipo == JogoTipo.corrida_caracois)
+                                  Padding(
+                                    padding: const EdgeInsets.all(16.0),
+                                    child: CaracolSelector(
+                                      jogo: jogo,
                                       selectedData: _selectedJogoId == jogo.id ? _selectedData : null,
                                       onSelect: (data) {
                                         setState(() {
@@ -335,6 +358,71 @@ class RifaSelector extends StatelessWidget {
                     color: occupied ? Colors.grey : (isSelected ? Colors.white : Colors.black),
                     fontSize: 12,
                     decoration: occupied ? TextDecoration.lineThrough : null,
+                  ),
+                ),
+              );
+            },
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+class CaracolSelector extends StatelessWidget {
+  final Jogo jogo;
+  final Map<String, dynamic>? selectedData;
+  final Function(Map<String, dynamic>) onSelect;
+
+  const CaracolSelector({
+    super.key,
+    required this.jogo,
+    this.selectedData,
+    required this.onSelect,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    final int numCaracois = jogo.config['num_caracois'] ?? 5;
+
+    return Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        const Text('Aposta no teu caracol favorito:', style: TextStyle(fontSize: 12)),
+        const SizedBox(height: 10),
+        SizedBox(
+          height: 120,
+          child: ListView.builder(
+            scrollDirection: Axis.horizontal,
+            itemCount: numCaracois,
+            itemBuilder: (context, index) {
+              final int numero = index + 1;
+              final bool isSelected = selectedData != null &&
+                                      selectedData!['numero_caracol'] == numero;
+
+              return GestureDetector(
+                onTap: () => onSelect({'numero_caracol': numero}),
+                child: Container(
+                  width: 80,
+                  margin: const EdgeInsets.only(right: 12),
+                  decoration: BoxDecoration(
+                    color: isSelected ? Colors.orange[100] : Colors.white,
+                    border: Border.all(
+                      color: isSelected ? Colors.orange : Colors.grey[300]!,
+                      width: 2,
+                    ),
+                    borderRadius: BorderRadius.circular(12),
+                  ),
+                  child: Column(
+                    mainAxisAlignment: MainAxisAlignment.center,
+                    children: [
+                      Text('🐌', style: const TextStyle(fontSize: 32)),
+                      const SizedBox(height: 4),
+                      Text('Nº $numero', style: TextStyle(
+                        fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+                        color: isSelected ? Colors.orange[900] : Colors.black,
+                      )),
+                    ],
                   ),
                 ),
               );

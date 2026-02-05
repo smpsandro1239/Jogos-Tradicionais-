@@ -17445,3 +17445,8 @@ Se desejar alojar a versão Web da aplicação móvel:
 5. **Build Command**: `npm install && npm run build`.
 6. **Start Command**: `npm run start:prod`.
 7. Configure as variáveis de ambiente (Base de Dados, JWT, etc.).
+
+### Corrida de Caracóis Digital (NOVO!)
+- Escolha do caracol favorito entre uma lista de competidores.
+- Sorteio automático e animação de corrida (brevemente).
+- Resultados auditáveis e notificações imediatas para os vencedores.

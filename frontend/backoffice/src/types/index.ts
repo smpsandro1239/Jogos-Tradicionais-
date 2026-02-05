@@ -29,11 +29,12 @@ export interface Evento {
 
 export interface Jogo {
   id: string;
-  tipo: 'poio_vaca' | 'rifa';
+  tipo: 'poio_vaca' | 'rifa' | 'corrida_caracois';
   config: {
     linhas?: number;
     colunas?: number;
     total_bilhetes?: number;
+    num_caracois?: number;
   };
   preco_participacao: number;
   estado: 'ativo' | 'pausado' | 'fechado' | 'terminado';

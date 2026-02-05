@@ -1,6 +1,7 @@
 enum JogoTipo {
   poio_vaca,
   rifa,
+  corrida_caracois,
 }
 
 enum JogoStatus {

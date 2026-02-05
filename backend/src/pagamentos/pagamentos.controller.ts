@@ -12,12 +12,23 @@ export class PagamentosController {
   @ApiOperation({ summary: 'Webhook simulado para confirmar pagamentos' })
   @ApiResponse({ status: 200, description: 'Pagamento processado' })
   async webhookSimulado(
-    @Body() body: { participacaoId: string; transactionId: string; success: boolean },
+    @Body()
+    body: {
+      participacaoId: string;
+      transactionId: string;
+      success: boolean;
+    },
   ) {
     if (body.success) {
-      return await this.pagamentosService.processarConfirmacao(body.participacaoId, body.transactionId);
+      return await this.pagamentosService.processarConfirmacao(
+        body.participacaoId,
+        body.transactionId,
+      );
     } else {
-      return await this.pagamentosService.cancelarParticipacao(body.participacaoId, 'Falha no pagamento simulado');
+      return await this.pagamentosService.cancelarParticipacao(
+        body.participacaoId,
+        'Falha no pagamento simulado',
+      );
     }
   }
 }

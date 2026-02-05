@@ -7,7 +7,10 @@ export class CreateParticipacaoDto {
   @IsNotEmpty()
   jogoId: string;
 
-  @ApiProperty({ description: 'Dados da participação (ex: {linha: 1, coluna: 2} ou {numero: 5})' })
+  @ApiProperty({
+    description:
+      'Dados da participação (ex: {linha: 1, coluna: 2} ou {numero: 5})',
+  })
   @IsObject()
   @IsNotEmpty()
   dados_participacao: any;

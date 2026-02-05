@@ -1,4 +1,13 @@
-import { Entity, PrimaryGeneratedColumn, Column, ManyToOne, OneToMany, OneToOne, CreateDateColumn, UpdateDateColumn } from 'typeorm';
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  ManyToOne,
+  OneToMany,
+  OneToOne,
+  CreateDateColumn,
+  UpdateDateColumn,
+} from 'typeorm';
 import { ApiProperty } from '@nestjs/swagger';
 import { Evento } from '../eventos/evento.entity';
 import { Participacao } from '../participacoes/participacao.entity';
@@ -7,6 +16,7 @@ import { Sorteio } from '../sorteios/sorteio.entity';
 export enum JogoTipo {
   POIO_VACA = 'poio_vaca',
   RIFA = 'rifa',
+  CORRIDA_CARACOIS = 'corrida_caracois',
 }
 
 export enum JogoStatus {

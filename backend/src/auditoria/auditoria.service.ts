@@ -10,7 +10,12 @@ export class AuditoriaService {
     private readonly auditLogRepository: Repository<AuditLog>,
   ) {}
 
-  async log(acao: string, detalhes: any, utilizadorId?: string, aldeiaId?: string): Promise<AuditLog> {
+  async log(
+    acao: string,
+    detalhes: any,
+    utilizadorId?: string,
+    aldeiaId?: string,
+  ): Promise<AuditLog> {
     const auditLog = this.auditLogRepository.create({
       acao,
       detalhes,

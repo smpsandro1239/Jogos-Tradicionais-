@@ -6,10 +6,7 @@ import { Participacao } from '../participacoes/participacao.entity';
 import { AuditoriaModule } from '../auditoria/auditoria.module';
 
 @Module({
-  imports: [
-    TypeOrmModule.forFeature([Participacao]),
-    AuditoriaModule,
-  ],
+  imports: [TypeOrmModule.forFeature([Participacao]), AuditoriaModule],
   controllers: [PagamentosController],
   providers: [PagamentosService],
   exports: [PagamentosService],

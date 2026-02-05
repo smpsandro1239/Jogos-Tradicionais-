@@ -1,4 +1,13 @@
-import { IsString, IsNotEmpty, IsOptional, IsEnum, IsNumber, IsJSON, IsObject, IsUUID } from 'class-validator';
+import {
+  IsString,
+  IsNotEmpty,
+  IsOptional,
+  IsEnum,
+  IsNumber,
+  IsJSON,
+  IsObject,
+  IsUUID,
+} from 'class-validator';
 import { ApiProperty } from '@nestjs/swagger';
 import { JogoTipo, JogoStatus } from '../jogo.entity';
 
@@ -8,7 +17,10 @@ export class CreateJogoDto {
   @IsNotEmpty()
   tipo: JogoTipo;
 
-  @ApiProperty({ description: 'Configuração do jogo (linhas/colunas para Poio da Vaca, total de bilhetes para Rifa)' })
+  @ApiProperty({
+    description:
+      'Configuração do jogo (linhas/colunas para Poio da Vaca, total de bilhetes para Rifa)',
+  })
   @IsObject()
   @IsNotEmpty()
   config: any;

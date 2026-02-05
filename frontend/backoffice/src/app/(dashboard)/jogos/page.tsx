@@ -3,7 +3,7 @@
 import { useEffect, useState } from 'react';
 import api from '@/lib/api';
 import { Jogo, Evento, Sorteio } from '@/types';
-import { Trophy, Plus, Edit, Trash2, LayoutGrid, Ticket, Loader2, Play, Eye } from 'lucide-react';
+import { Trophy, Plus, Edit, Trash2, LayoutGrid, Ticket, Loader2, Play, Eye, Footprints } from 'lucide-react';
 import { cn } from '@/lib/utils';
 import Modal from '@/components/Modal';
 import axios from 'axios';
@@ -135,6 +135,7 @@ export default function JogosPage() {
     switch (tipo) {
       case 'poio_vaca': return { label: 'Poio da Vaca', icon: LayoutGrid };
       case 'rifa': return { label: 'Rifa', icon: Ticket };
+      case 'corrida_caracois': return { label: 'Corrida de Caracóis', icon: Footprints };
       default: return { label: tipo, icon: Trophy };
     }
   };
@@ -270,15 +271,17 @@ export default function JogosPage() {
                 className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none capitalize"
                 value={currentJogo?.tipo || 'poio_vaca'}
                 onChange={(e) => {
-                  const tipo = e.target.value as 'poio_vaca' | 'rifa';
-                  const config = tipo === 'poio_vaca'
-                    ? { linhas: 10, colunas: 10 }
-                    : { total_bilhetes: 100 };
+                  const tipo = e.target.value as Jogo['tipo'];
+                  let config = {};
+                  if (tipo === 'poio_vaca') config = { linhas: 10, colunas: 10 };
+                  else if (tipo === 'rifa') config = { total_bilhetes: 100 };
+                  else if (tipo === 'corrida_caracois') config = { num_caracois: 5 };
                   setCurrentJogo(prev => ({ ...prev!, tipo, config }));
                 }}
               >
                 <option value="poio_vaca">Poio da Vaca</option>
                 <option value="rifa">Rifa</option>
+                <option value="corrida_caracois">Corrida de Caracóis</option>
               </select>
             </div>
             <div>
@@ -342,7 +345,7 @@ export default function JogosPage() {
                   />
                 </div>
               </div>
-            ) : (
+            ) : currentJogo?.tipo === 'rifa' ? (
               <div>
                 <label className="block text-xs font-medium text-slate-500 mb-1">Total Bilhetes</label>
                 <input
@@ -354,6 +357,22 @@ export default function JogosPage() {
                   onChange={(e) => setCurrentJogo(prev => ({
                     ...prev!,
                     config: { ...prev!.config, total_bilhetes: parseInt(e.target.value) }
+                  }))}
+                />
+              </div>
+            ) : (
+              <div>
+                <label className="block text-xs font-medium text-slate-500 mb-1">Número de Caracóis</label>
+                <input
+                  type="number"
+                  required
+                  min="2"
+                  max="20"
+                  className="w-full p-2 border border-slate-300 rounded-lg focus:ring-2 focus:ring-green-500 outline-none"
+                  value={currentJogo?.config?.num_caracois || ''}
+                  onChange={(e) => setCurrentJogo(prev => ({
+                    ...prev!,
+                    config: { ...prev!.config, num_caracois: parseInt(e.target.value) }
                   }))}
                 />
               </div>
@@ -395,7 +414,11 @@ export default function JogosPage() {
                 {currentSorteio.resultado.linha ? (
                   `L:${currentSorteio.resultado.linha} C:${currentSorteio.resultado.coluna}`
                 ) : (
-                  `Nº ${currentSorteio.resultado.numero}`
+                  currentSorteio.resultado.numero_caracol ? (
+                    `Caracol Nº ${currentSorteio.resultado.numero_caracol}`
+                  ) : (
+                    `Nº ${currentSorteio.resultado.numero}`
+                  )
                 )}
               </div>
             </div>

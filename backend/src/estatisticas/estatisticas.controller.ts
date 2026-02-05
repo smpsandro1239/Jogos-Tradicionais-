@@ -1,4 +1,11 @@
-import { Controller, Get, Param, UseGuards, Request, ForbiddenException } from '@nestjs/common';
+import {
+  Controller,
+  Get,
+  Param,
+  UseGuards,
+  Request,
+  ForbiddenException,
+} from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiBearerAuth } from '@nestjs/swagger';
 import { EstatisticasService } from './estatisticas.service';
 import { JwtAuthGuard } from '../auth/jwt-auth.guard';
@@ -46,12 +53,14 @@ export class EstatisticasController {
   @ApiOperation({ summary: 'Obter estatísticas de um evento específico' })
   async getEvento(@Param('eventoId') eventoId: string, @Request() req) {
     if (req.user.role === UserRole.SUPER_ADMIN) {
-        return this.estatisticasService.getPorEvento(eventoId);
+      return this.estatisticasService.getPorEvento(eventoId);
     }
 
     const evento = await this.eventosService.findOne(eventoId);
     if (evento.aldeiaId !== req.user.aldeiaId) {
-        throw new ForbiddenException('Não tem permissão para aceder a estatísticas deste evento');
+      throw new ForbiddenException(
+        'Não tem permissão para aceder a estatísticas deste evento',
+      );
     }
 
     return this.estatisticasService.getPorEvento(eventoId);

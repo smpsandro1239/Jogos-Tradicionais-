@@ -2,7 +2,7 @@ import { Injectable } from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Participacao } from '../participacoes/participacao.entity';
-import { Evento } from '../eventos/evento.entity';
+import { Evento, EventoStatus } from '../eventos/evento.entity';
 import { Aldeia } from '../aldeias/aldeia.entity';
 
 @Injectable()
@@ -18,7 +18,9 @@ export class EstatisticasService {
 
   async getGlobalSuperAdmin() {
     const totalAldeias = await this.aldeiasRepository.count();
-    const totalEventos = await this.eventosRepository.count({ where: { estado: 'ativo' } });
+    const totalEventos = await this.eventosRepository.count({
+      where: { estado: EventoStatus.ATIVO },
+    });
 
     const stats = await this.participacoesRepository
       .createQueryBuilder('p')
@@ -69,13 +71,13 @@ export class EstatisticasService {
       relations: ['jogos', 'jogos.participacoes'],
     });
 
-    return eventos.map(e => {
+    return eventos.map((e) => {
       let totalAngariado = 0;
       let totalParticipacoes = 0;
 
-      e.jogos.forEach(j => {
+      e.jogos.forEach((j) => {
         totalParticipacoes += j.participacoes.length;
-        j.participacoes.forEach(p => {
+        j.participacoes.forEach((p) => {
           totalAngariado += Number(p.valor_pago);
         });
       });

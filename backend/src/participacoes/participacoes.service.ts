@@ -1,113 +1,125 @@
-import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
-import { Participacao } from './participacao.entity';
+import { Participacao, ParticipacaoStatus } from './participacao.entity';
+import { Jogo, JogoStatus, JogoTipo } from '../jogos/jogo.entity';
+import { Utilizador } from '../utilizadores/utilizador.entity';
+import { NotificacoesGateway } from '../notificacoes/notificacoes.gateway';
 import { CreateParticipacaoDto } from './dto/create-participacao.dto';
-import { JogosService } from '../jogos/jogos.service';
-import { JogoTipo, JogoStatus } from '../jogos/jogo.entity';
-import { AuditoriaService } from '../auditoria/auditoria.service';
-import { ParticipacaoStatus } from './participacao.entity';
 
 @Injectable()
 export class ParticipacoesService {
   constructor(
     @InjectRepository(Participacao)
-    private readonly participacoesRepository: Repository<Participacao>,
-    private readonly jogosService: JogosService,
-    private readonly auditoriaService: AuditoriaService,
+    private participacoesRepository: Repository<Participacao>,
+    @InjectRepository(Jogo)
+    private jogosRepository: Repository<Jogo>,
+    @InjectRepository(Utilizador)
+    private utilizadoresRepository: Repository<Utilizador>,
+    private notificacoesGateway: NotificacoesGateway,
   ) {}
 
-  async create(createParticipacaoDto: CreateParticipacaoDto, utilizadorId: string): Promise<Participacao> {
-    const jogo = await this.jogosService.findOne(createParticipacaoDto.jogoId);
+  async create(
+    dto: CreateParticipacaoDto,
+    utilizadorId: string,
+  ): Promise<Participacao> {
+    const { jogoId, dados_participacao } = dto;
 
-    if (jogo.estado !== JogoStatus.ATIVO) {
-      throw new BadRequestException('Não é possível participar num jogo que não está ativo');
-    }
-
-    // Validar regras de negócio baseadas no tipo de jogo
-    this.validarRegrasJogo(jogo.tipo, jogo.config, createParticipacaoDto.dados_participacao);
-
-    // Verificar se já existe participação com os mesmos dados para este jogo
-    const existe = await this.participacoesRepository.findOne({
-      where: {
-        jogoId: jogo.id,
-        dados_participacao: createParticipacaoDto.dados_participacao,
-      },
+    const jogo = await this.jogosRepository.findOne({
+      where: { id: jogoId },
+      relations: ['evento'],
     });
 
-    if (existe) {
-      throw new ConflictException('Esta coordenada ou número já foi escolhido');
+    if (!jogo) throw new NotFoundException('Jogo não encontrado');
+    if (jogo.estado !== JogoStatus.ATIVO) {
+      throw new BadRequestException(
+        'Este jogo não está ativo para novas participações',
+      );
+    }
+
+    const utilizador = await this.utilizadoresRepository.findOne({
+      where: { id: utilizadorId },
+    });
+    if (!utilizador) throw new NotFoundException('Utilizador não encontrado');
+
+    // Validações específicas por tipo de jogo
+    if (jogo.tipo === JogoTipo.POIO_VACA) {
+      const { linha, coluna } = dados_participacao;
+      if (!linha || !coluna)
+        throw new BadRequestException('Coordenadas inválidas');
+
+      const existente = await this.participacoesRepository.findOne({
+        where: { jogoId: jogoId, dados_participacao: { linha, coluna } },
+      });
+      if (existente)
+        throw new BadRequestException('Esta célula já está ocupada');
+    } else if (jogo.tipo === JogoTipo.RIFA) {
+      const { numero } = dados_participacao;
+      if (!numero)
+        throw new BadRequestException('Número da rifa não especificado');
+
+      const existente = await this.participacoesRepository.findOne({
+        where: { jogoId: jogoId, dados_participacao: { numero } },
+      });
+      if (existente)
+        throw new BadRequestException('Este número já foi escolhido');
     }
 
     const participacao = this.participacoesRepository.create({
-      ...createParticipacaoDto,
+      jogoId,
       utilizadorId,
+      dados_participacao,
+      valor_pago: jogo.preco_participacao,
+      status: ParticipacaoStatus.PENDENTE,
     });
 
-    try {
-      const participacaoSalva = await this.participacoesRepository.save(participacao);
+    const saved = await this.participacoesRepository.save(participacao);
 
-      // Registar na auditoria
-      await this.auditoriaService.log(
-        'PARTICIPACAO_COMPRADA',
-        { participacaoId: participacaoSalva.id, jogoId: createParticipacaoDto.jogoId, dados: createParticipacaoDto.dados_participacao },
-        utilizadorId,
-        jogo.evento ? (jogo.evento as any).aldeiaId : undefined,
+    // Emitir via WebSocket se tiver aldeiaId
+    if (jogo.evento && (jogo.evento as any).aldeiaId) {
+      this.notificacoesGateway.emitNovaParticipacao(
+        (jogo.evento as any).aldeiaId,
+        {
+          jogoId: jogo.id,
+          utilizadorNome: utilizador.nome,
+          dados: dados_participacao,
+        },
       );
-
-      return participacaoSalva;
-    } catch (error) {
-      if (error.code === '23505') { // Unique violation
-        throw new ConflictException('Esta participação já existe');
-      }
-      throw error;
     }
+
+    return saved;
   }
 
-  private validarRegrasJogo(tipo: JogoTipo, config: any, dados: any) {
-    if (tipo === JogoTipo.POIO_VACA) {
-      if (!dados.linha || !dados.coluna) {
-        throw new BadRequestException('Dados de participação inválidos para Poio da Vaca (requer linha e coluna)');
-      }
-      if (dados.linha < 1 || dados.linha > config.linhas || dados.coluna < 1 || dados.coluna > config.colunas) {
-        throw new BadRequestException(`Coordenadas fora dos limites da grelha (${config.linhas}x${config.colunas})`);
-      }
-    } else if (tipo === JogoTipo.RIFA) {
-      if (!dados.numero) {
-        throw new BadRequestException('Dados de participação inválidos para Rifa (requer número)');
-      }
-      if (dados.numero < 1 || dados.numero > config.total_bilhetes) {
-        throw new BadRequestException(`Número fora dos limites da rifa (1-${config.total_bilhetes})`);
-      }
+  async findAll(jogoId?: string): Promise<Participacao[]> {
+    if (jogoId) {
+      return this.participacoesRepository.find({
+        where: { jogoId },
+        relations: ['utilizador'],
+      });
     }
-  }
-
-  async findAll(jogoId?: string, status?: ParticipacaoStatus): Promise<Participacao[]> {
-    const where: any = {};
-    if (jogoId) where.jogoId = jogoId;
-    if (status) where.status = status;
-
-    return await this.participacoesRepository.find({
-      where,
+    return this.participacoesRepository.find({
       relations: ['utilizador', 'jogo'],
     });
   }
 
   async findByUser(utilizadorId: string): Promise<Participacao[]> {
-    return await this.participacoesRepository.find({
+    return this.participacoesRepository.find({
       where: { utilizadorId },
-      relations: ['jogo'],
+      relations: ['jogo', 'jogo.evento'],
+      order: { created_at: 'DESC' },
     });
   }
 
   async findOne(id: string): Promise<Participacao> {
-    const participacao = await this.participacoesRepository.findOne({
+    const p = await this.participacoesRepository.findOne({
       where: { id },
       relations: ['utilizador', 'jogo'],
     });
-    if (!participacao) {
-      throw new NotFoundException(`Participação com ID "${id}" não encontrada`);
-    }
-    return participacao;
+    if (!p) throw new NotFoundException('Participação não encontrada');
+    return p;
   }
 }

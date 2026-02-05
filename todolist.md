@@ -62,31 +62,38 @@
 ## DevOps & Deploy
 - [Concluído] Alta - Configuração de Docker para Backend
 - [Concluído] Média - Configuração de Deploy para Vercel (Frontend)
-- [Pendente] Média - Configuração de Deploy para Render (Backend)
+- [Concluído] Média - Configuração de Deploy para Render (Backend)
+- [Concluído] Alta - Criação de `render.yaml` (Blueprints)
+- [Concluído] Alta - Configuração de `vercel.json` na raiz para redirecionamentos API
 
-## Futuros Jogos & Melhorias
+## Sprint 6: Novos Jogos & Interatividade
+- [Concluído] Alta - Implementação do jogo: **Corrida de Caracóis Digital**
+- [Concluído] Média - Animações Web para Sorteios em Tempo Real (WebSockets)
+- [Pendente] Baixa - Jogo do Galo/Galinha Digital
+
+## Futuros Jogos & Melhorias (Wishlist)
 - [Pendente] Baixa - Modo Transmissão ao Vivo (WebSockets)
 - [Pendente] Baixa - Localização GPS
 - [Pendente] Baixa - Galeria de Fotos
-- [Pendente] Baixa - Jogo do Galo/Galinha Digital
 - [Pendente] Baixa - Leilão de Cabazes
 - [Pendente] Baixa - Tômbola Digital
-- [Pendente] Baixa - Corrida de Caracóis Digital
 - [Pendente] Baixa - Jogo da Malha AR
 - [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** Configurando deploy para Vercel e Render.
-**Progresso Total Backend:** 100%
-**Progresso Total Projeto:** ~99% (Fase final de DevOps)
+**Progresso Total:** 87% (52/60 tarefas concluídas)
 
-**O que foi feito nesta etapa:**
-- Criação de `vercel.json` na raiz para suporte a monorepo.
-- Definição das instruções de Root Directory para a Vercel.
-- Atualização do README com guia de deploy.
+**O que foi realizado nesta etapa:**
+- **WebSockets no Backend:** Implementação do `NotificacoesGateway` usando Socket.io para emitir eventos em tempo real (`jogo_sorteado` e `nova_participacao`).
+- **WebSockets no Backoffice:** Integração com `socket.io-client` e notificações visuais automáticas usando `react-hot-toast`.
+- **WebSockets na App Mobile:** Criação do `SocketService` no Flutter para ouvir eventos e gerar notificações in-app instantâneas.
+- **Correção de Regressões:** Ajuste de tipos e métodos nos serviços de Sorteios e Participações para garantir compatibilidade com as entidades existentes.
+
+**O que vou realizar na próxima:**
+- Implementação do jogo "Jogo do Galo/Galinha Digital" com suporte a apostas em quadrantes.
+- Refinamento da UI de sorteio no Backoffice para incluir uma animação de "Carga" enquanto o WebSocket não confirma o resultado.
 
 **O que falta realizar:**
-- Validação final do deploy backend.
-- Pequenos ajustes de UI/UX.
+- Sprint 6: Jogo do Galo/Galinha.
+- Wishlist: GPS, Galeria de Fotos, Leilão, Tômbola, Malha AR, IoT.
 
-**Próxima interação:** Finalização de DevOps e suporte ao deploy.

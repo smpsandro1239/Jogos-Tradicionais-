@@ -1,120 +1,130 @@
-import { Injectable, NotFoundException, BadRequestException, ConflictException } from '@nestjs/common';
+import {
+  Injectable,
+  NotFoundException,
+  BadRequestException,
+} from '@nestjs/common';
 import { InjectRepository } from '@nestjs/typeorm';
 import { Repository } from 'typeorm';
 import { Sorteio } from './sorteio.entity';
-import { JogosService } from '../jogos/jogos.service';
-import { JogoStatus, JogoTipo, Jogo } from '../jogos/jogo.entity';
-import { AuditoriaService } from '../auditoria/auditoria.service';
+import { Jogo, JogoStatus, JogoTipo } from '../jogos/jogo.entity';
+import {
+  Participacao,
+  ParticipacaoStatus,
+} from '../participacoes/participacao.entity';
 import { NotificacoesService } from '../notificacoes/notificacoes.service';
-import { ParticipacoesService } from '../participacoes/participacoes.service';
-import { ParticipacaoStatus } from '../participacoes/participacao.entity';
+import { NotificacoesGateway } from '../notificacoes/notificacoes.gateway';
+import { AuditoriaService } from '../auditoria/auditoria.service';
 import * as crypto from 'crypto';
 
 @Injectable()
 export class SorteiosService {
   constructor(
     @InjectRepository(Sorteio)
-    private readonly sorteiosRepository: Repository<Sorteio>,
-    private readonly jogosService: JogosService,
-    private readonly auditoriaService: AuditoriaService,
-    private readonly participacoesService: ParticipacoesService,
-    private readonly notificacoesService: NotificacoesService,
+    private sorteiosRepository: Repository<Sorteio>,
+    @InjectRepository(Jogo)
+    private jogosRepository: Repository<Jogo>,
+    @InjectRepository(Participacao)
+    private participacoesRepository: Repository<Participacao>,
+    private notificacoesService: NotificacoesService,
+    private notificacoesGateway: NotificacoesGateway,
+    private auditoriaService: AuditoriaService,
   ) {}
 
-  async realizarSorteio(jogoId: string, utilizadorId?: string, aldeiaId?: string): Promise<Sorteio> {
-    const jogo = await this.jogosService.findOne(jogoId);
+  async realizarSorteio(
+    jogoId: string,
+    utilizadorId: string,
+    aldeiaId?: string,
+  ): Promise<Sorteio> {
+    const jogo = await this.jogosRepository.findOne({
+      where: { id: jogoId },
+      relations: ['evento'],
+    });
 
-    if (jogo.estado === JogoStatus.TERMINADO) {
-      throw new ConflictException('O sorteio para este jogo já foi realizado');
+    if (!jogo) throw new NotFoundException('Jogo não encontrado');
+    if (jogo.estado !== JogoStatus.ATIVO) {
+      throw new BadRequestException('Apenas jogos ativos podem ser sorteados');
     }
 
-    // Gerar seed e hash
-    const seed = crypto.randomBytes(32).toString('hex') + Date.now();
+    // Obter todas as participações pagas
+    const participacoes = await this.participacoesRepository.find({
+      where: { jogoId: jogoId, status: ParticipacaoStatus.PAGO },
+      relations: ['utilizador'],
+    });
+
+    if (participacoes.length === 0) {
+      throw new BadRequestException(
+        'Não existem participações pagas para este jogo',
+      );
+    }
+
+    // Gerar seed e calcular resultado
+    const seed = crypto.randomBytes(16).toString('hex');
     const hash = crypto.createHash('sha256').update(seed).digest('hex');
 
-    // Calcular resultado
-    const resultado = this.calcularResultado(jogo.tipo, jogo.config, hash);
+    const hashInt = BigInt(`0x${hash}`);
+    const indexVencedor = Number(hashInt % BigInt(participacoes.length));
+    const vencedor = participacoes[indexVencedor];
+
+    let resultadoFormatado = '';
+    if (jogo.tipo === JogoTipo.POIO_VACA) {
+      const coord = vencedor.dados_participacao;
+      resultadoFormatado = `O poio caiu na célula [${coord.linha}, ${coord.coluna}]`;
+    } else if (jogo.tipo === JogoTipo.RIFA) {
+      resultadoFormatado = `O número sorteado foi o ${vencedor.dados_participacao.numero}`;
+    } else if (jogo.tipo === JogoTipo.CORRIDA_CARACOIS) {
+      resultadoFormatado = `O caracol vencedor foi o nº ${vencedor.dados_participacao.numero_caracol}`;
+    }
 
     const sorteio = this.sorteiosRepository.create({
       jogoId,
       seed,
       hash,
-      resultado,
+      resultado: vencedor.dados_participacao,
     });
 
-    const sorteioSalvo = await this.sorteiosRepository.save(sorteio);
+    const savedSorteio = await this.sorteiosRepository.save(sorteio);
 
     // Atualizar estado do jogo
-    await this.jogosService.update(jogoId, { estado: JogoStatus.TERMINADO });
+    jogo.estado = JogoStatus.TERMINADO;
+    await this.jogosRepository.save(jogo);
 
-    // Notificar vencedor e participantes
-    this.processarNotificacoes(jogo, resultado);
-
-    // Registar na auditoria
+    // Auditoria
     await this.auditoriaService.log(
       'SORTEIO_REALIZADO',
-      { jogoId, resultado, hash },
+      { jogoId, sorteioId: savedSorteio.id, vencedorId: vencedor.utilizadorId },
       utilizadorId,
-      aldeiaId || (jogo.evento ? (jogo.evento as any).aldeiaId : undefined),
+      aldeiaId,
     );
 
-    return sorteioSalvo;
-  }
+    // Enviar notificações
+    const jogoNome = `Jogo ${jogo.tipo}`; // Melhorar se houver nome
+    await this.notificacoesService.notificarVencedor(
+      vencedor.utilizador.email,
+      vencedor.utilizador.nome,
+      jogoNome,
+      vencedor.dados_participacao,
+    );
 
-  private calcularResultado(tipo: JogoTipo, config: any, hash: string): any {
-    const intValue = parseInt(hash.substring(0, 8), 16);
-
-    if (tipo === JogoTipo.RIFA) {
-      const total = config.total_bilhetes;
-      const numeroVencedor = (intValue % total) + 1;
-      return { numero: numeroVencedor };
-    } else if (tipo === JogoTipo.POIO_VACA) {
-      const rows = config.linhas;
-      const cols = config.colunas;
-      const totalSquares = rows * cols;
-      const index = intValue % totalSquares;
-
-      const linha = Math.floor(index / cols) + 1;
-      const coluna = (index % cols) + 1;
-
-      return { linha, coluna };
+    // Emitir via WebSocket
+    if (aldeiaId) {
+      this.notificacoesGateway.emitJogoSorteado(aldeiaId, {
+        jogoId: jogo.id,
+        resultado: resultadoFormatado,
+        vencedorNome: vencedor.utilizador.nome,
+        dadosSorteio: savedSorteio,
+      });
     }
 
-    throw new BadRequestException('Tipo de jogo desconhecido para sorteio');
-  }
-
-  private async processarNotificacoes(jogo: Jogo, resultado: any) {
-    const participacoesPagas = await this.participacoesService.findAll(jogo.id, ParticipacaoStatus.PAGO);
-    const emails = [...new Set(participacoesPagas.map(p => p.utilizador.email))];
-    const pushTokens = [...new Set(participacoesPagas.map(p => p.utilizador.push_token).filter(t => t != null))];
-
-    const vencedores = participacoesPagas.filter(p => {
-      if (jogo.tipo === JogoTipo.RIFA) {
-        return p.dados_participacao.numero === resultado.numero;
-      } else if (jogo.tipo === JogoTipo.POIO_VACA) {
-        return p.dados_participacao.linha === resultado.linha && p.dados_participacao.coluna === resultado.coluna;
-      }
-      return false;
-    });
-
-    for (const v of vencedores) {
-      await this.notificacoesService.notificarVencedor(
-        v.utilizador.email,
-        v.utilizador.nome,
-        jogo.tipo === JogoTipo.RIFA ? 'Rifa' : 'Poio da Vaca',
-        resultado,
-        v.utilizador.push_token
-      );
-    }
-
-    await this.notificacoesService.notificarSorteioRealizado(emails, jogo.tipo === JogoTipo.RIFA ? 'Rifa' : 'Poio da Vaca', pushTokens);
+    return savedSorteio;
   }
 
   async findOneByJogo(jogoId: string): Promise<Sorteio> {
-    const sorteio = await this.sorteiosRepository.findOne({ where: { jogoId } });
-    if (!sorteio) {
-      throw new NotFoundException(`Sorteio para o jogo "${jogoId}" não encontrado`);
-    }
-    return sorteio;
+    const s = await this.sorteiosRepository.findOne({
+      where: { jogoId },
+      relations: ['jogo'],
+    });
+    if (!s)
+      throw new NotFoundException('Sorteio não encontrado para este jogo');
+    return s;
   }
 }
