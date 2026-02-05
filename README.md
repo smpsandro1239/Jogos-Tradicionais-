@@ -17402,3 +17402,8 @@ Continue a conversa
 - Execução de **Sorteios Determinísticos** via interface administrativa.
 - Visualização detalhada de resultados de sorteios com dados de auditoria (Seed, Hash SHA-256).
 - Registo completo de **Auditoria do Sistema**, permitindo rastrear ações sensíveis.
+
+### Gestão de Utilizadores e Roles
+- Listagem centralizada de utilizadores registados.
+- Controlo de acesso granular (Super Admin, Admin de Aldeia, Utilizador).
+- Atribuição de permissões específicas por Aldeia para administradores locais.

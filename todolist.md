@@ -55,8 +55,9 @@
 - [Concluído] Alta - Listagem de Aldeias
 - [Concluído] Alta - CRUD completo de Eventos
 - [Concluído] Alta - CRUD completo de Jogos
-- [Em Progresso] Média - Visualização de Auditoria e Logs
-- [Em Progresso] Média - Execução de Sorteios via Web
+- [Concluído] Média - Visualização de Auditoria e Logs
+- [Concluído] Média - Execução de Sorteios via Web
+- [Concluído] Alta - Gestão de Utilizadores e Roles
 
 ## Futuros Jogos & Melhorias
 - [Pendente] Baixa - Modo Transmissão ao Vivo (WebSockets)
@@ -70,19 +71,18 @@
 - [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** CRUD de Eventos e Jogos implementado no Backoffice.
+**Status atual:** Gestão de Utilizadores e Roles concluída no Backoffice.
 **Progresso Total Backend:** 100%
-**Progresso Total Projeto:** ~95%
+**Progresso Total Projeto:** ~98%
 
 **O que foi feito nesta etapa:**
-- Criação de componente `Modal` reutilizável no Backoffice.
-- Implementação de formulários de criação e edição para Eventos.
-- Implementação de formulários de criação e edição para Jogos com configurações específicas.
-- Integração total com a API para operações de escrita (POST, PATCH, DELETE).
+- Implementação de endpoints de gestão de utilizadores no Backend.
+- Criação da página de Gestão de Utilizadores no Backoffice.
+- Funcionalidade de alteração de Roles (super_admin, aldeia_admin, user).
+- Associação de Aldeias a administradores locais.
 
 **O que falta realizar:**
-- Execução de sorteios a partir do Backoffice.
 - Notificações Push no Mobile.
-- Melhorias na auditoria visual.
+- Polimento final e testes E2E.
 
-**Próxima interação:** Execução de Sorteios via Backoffice e Visualização de Auditoria.
+**Próxima interação:** Notificações Push na App Mobile.

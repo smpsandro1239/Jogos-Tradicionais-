@@ -13,6 +13,7 @@ export interface User {
   email: string;
   role: 'super_admin' | 'aldeia_admin' | 'user';
   aldeia_id?: string;
+  aldeia?: Aldeia;
 }
 
 export interface Evento {
