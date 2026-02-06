@@ -17445,3 +17445,17 @@ Se desejar alojar a versão Web da aplicação móvel:
 5. **Build Command**: `npm install && npm run build`.
 6. **Start Command**: `npm run start:prod`.
 7. Configure as variáveis de ambiente (Base de Dados, JWT, etc.).
+
+---
+
+## 🛠️ Resolução de Problemas de Deploy
+
+### GitHub Pages mostra o README em vez da App
+Se ao aceder ao URL do GitHub Pages vir o conteúdo deste ficheiro em vez da aplicação Flutter:
+1. Vá às **Settings** do seu repositório no GitHub.
+2. No menu lateral, clique em **Pages**.
+3. Na secção **Build and deployment** -> **Source**, altere de "Deploy from a branch" para **GitHub Actions**.
+4. Isto permitirá que o workflow `.github/workflows/deploy-flutter-web.yml` publique os ficheiros corretamente.
+
+### Vercel mostra erro ou README
+Certifique-se de que configurou o **Root Directory** como `frontend/backoffice` nas definições do projeto na Vercel para o Backoffice.
