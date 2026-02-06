@@ -1,32 +1,33 @@
 # 🐄 Jogos Tradicionais - Monorepo
 
-## 🚀 Guia de Deploy e Configuração (LIA COM ATENÇÃO)
+## 🚨 SOLUÇÃO PARA O ERRO DE DEPLOY (LIA AQUI)
 
-### 1. 📱 App Mobile Web (GitHub Pages)
+O erro `flutter/bin/flutter: No such file or directory` acontece porque **a Vercel não suporta o Flutter**. Não tente fazer o build da pasta `frontend/mobile` na Vercel.
+
+### 1. Como Corrigir o GitHub Pages (App Mobile)
 **URL:** https://smpsandro1239.github.io/Jogos-Tradicionais-/
+Se abrir o README em vez da App:
+1. No seu repositório GitHub, vá a **Settings** > **Pages**.
+2. Em **Build and deployment** > **Source**, altere obrigatoriamente para **GitHub Actions**.
+3. Aguarde o fim do workflow `Deploy Flutter Web`.
 
-**Se abrir o README em vez da App:**
-1. Vá às **Settings** do seu repositório no GitHub.
-2. No menu lateral, clique em **Pages**.
-3. Em **Build and deployment** > **Source**, altere para **GitHub Actions**.
-
-### 2. 🛠️ Backoffice Admin (Vercel)
-**MUITO IMPORTANTE:**
-1. No dashboard da Vercel, vá às definições do projeto.
+### 2. Como Corrigir o Backoffice (Vercel)
+**URL:** https://jogos-tradicionais-backoffice.vercel.app/
+1. No dashboard da Vercel, selecione o projeto do **Backoffice**.
 2. Vá a **Settings** > **General**.
-3. Mude o **Root Directory** para `frontend/backoffice`.
+3. Verifique se o **Root Directory** é `frontend/backoffice`.
 4. Vá a **Settings** > **Build & Development**.
-5. **LIMPE** o "Build Command" (deixe vazio/default). O erro do Flutter acontece porque este campo tem lixo.
-6. Clique em **Save** e faça um novo **Redeploy**.
+5. **RESET** todos os campos (Build Command, Output Directory, Install Command). Deixe-os vazios/default.
+6. Faça um **Redeploy**.
 
-### 3. ⚙️ Backend API (Render)
-1. Root Directory: `backend`
-2. Build: `npm install && npm run build`
-3. Start: `npm run start:prod`
+### 3. O URL principal (Vercel Root)
+**URL:** https://jogos-tradicionais.vercel.app/
+Este URL serve como uma **Landing Page** que o leva para a App ou para o Backoffice.
+* Se criou um projeto Vercel para a raiz do repositório, não altere o Build Command.
 
 ---
 
-## 📁 Estrutura
-- `backend`: NestJS API
-- `frontend/backoffice`: Next.js Admin
-- `frontend/mobile`: Flutter App
+## 📁 Estrutura do Monorepo
+- `backend`: NestJS API (Deploy no Render)
+- `frontend/backoffice`: Next.js Admin (Deploy na Vercel)
+- `frontend/mobile`: Flutter App (Deploy no GitHub Pages via Actions)
