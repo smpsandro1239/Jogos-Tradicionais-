@@ -17459,3 +17459,31 @@ Se ao aceder ao URL do GitHub Pages vir o conteúdo deste ficheiro em vez da apl
 
 ### Vercel mostra erro ou README
 Certifique-se de que configurou o **Root Directory** como `frontend/backoffice` nas definições do projeto na Vercel para o Backoffice.
+
+---
+
+## 🚀 Instruções de Configuração de Deploy (CRÍTICO)
+
+Se as aplicações não estiverem a abrir corretamente, siga estes passos:
+
+### 1. GitHub Pages (App Mobile Web)
+O URL esperado é: `https://smpsandro1239.github.io/Jogos-Tradicionais-/`
+* **Problema:** Abre o README em vez da App.
+* **Solução:**
+  1. Vá às **Settings** do seu repositório no GitHub.
+  2. Clique em **Pages** (menu lateral).
+  3. Em **Build and deployment** > **Source**, mude para **GitHub Actions**.
+  4. O workflow `.github/workflows/deploy-flutter-web.yml` irá agora publicar automaticamente a App.
+
+### 2. Vercel (Backoffice Admin)
+O URL esperado é: `https://jogos-tradicionais.vercel.app/`
+* **Problema:** Página em branco ou erro.
+* **Solução:**
+  1. No dashboard da Vercel, selecione o projeto.
+  2. Vá a **Settings** > **General**.
+  3. Localize **Root Directory** e mude para `frontend/backoffice`.
+  4. Vá a **Settings** > **Environment Variables** e garanta que `NEXT_PUBLIC_API_URL` aponta para o backend (ex: `https://jogos-tradicionais-backend.onrender.com/api`).
+  5. Faça um novo **Redeploy** na tab **Deployments**.
+
+### 3. Backend (Render)
+* Garanta que o **Root Directory** no Render está configurado como `backend`.

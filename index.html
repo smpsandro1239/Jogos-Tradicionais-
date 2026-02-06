@@ -5,35 +5,33 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Jogos Tradicionais - Plataforma</title>
     <style>
-        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #e8f5e9; color: #333; }
-        .container { text-align: center; padding: 3rem; background: white; border-radius: 12px; box-shadow: 0 10px 25px rgba(0,0,0,0.1); max-width: 500px; width: 90%; }
-        h1 { color: #2e7d32; margin-bottom: 0.5rem; }
-        p { color: #666; margin-bottom: 2rem; }
-        .links { display: flex; flex-direction: column; gap: 1rem; width: 100%; }
-        .button { padding: 1rem; text-decoration: none; border-radius: 8px; color: white; font-weight: bold; transition: transform 0.2s, opacity 0.2s; display: block; }
-        .button:active { transform: scale(0.98); }
-        .button:hover { opacity: 0.9; }
-        .btn-app { background-color: #2e7d32; }
-        .btn-admin { background-color: #ffa000; }
-        .footer { margin-top: 2rem; font-size: 0.8rem; color: #999; }
+        body { font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; display: flex; flex-direction: column; align-items: center; justify-content: center; height: 100vh; margin: 0; background-color: #f0f4f8; color: #1a202c; }
+        .container { text-align: center; padding: 2.5rem; background: white; border-radius: 1rem; box-shadow: 0 20px 25px -5px rgba(0, 0, 0, 0.1), 0 10px 10px -5px rgba(0, 0, 0, 0.04); max-width: 450px; width: 90%; }
+        .logo { font-size: 4rem; margin-bottom: 1rem; }
+        h1 { color: #2d3748; margin: 0 0 0.5rem 0; font-size: 1.8rem; }
+        p { color: #718096; margin-bottom: 2rem; font-size: 1rem; }
+        .links { display: flex; flex-direction: column; gap: 1rem; }
+        .button { padding: 0.875rem; text-decoration: none; border-radius: 0.5rem; color: white; font-weight: 600; transition: all 0.2s; display: block; text-transform: uppercase; letter-spacing: 0.025em; }
+        .button:hover { filter: brightness(1.1); transform: translateY(-1px); }
+        .button:active { transform: translateY(0); }
+        .btn-app { background-color: #38a169; }
+        .btn-admin { background-color: #d69e2e; }
+        .footer { margin-top: 2.5rem; font-size: 0.75rem; color: #a0aec0; border-top: 1px solid #edf2f7; padding-top: 1rem; }
     </style>
 </head>
 <body>
     <div class="container">
-        <div style="font-size: 3rem; margin-bottom: 1rem;">🐄</div>
+        <div class="logo">🐄</div>
         <h1>Jogos Tradicionais</h1>
-        <p>Plataforma Digital de Angariação de Fundos</p>
+        <p>Plataforma de Angariação de Fundos</p>
         <div class="links">
-            <a href="./frontend/mobile/build/web/index.html" class="button btn-app">Entrar na Aplicação</a>
-            <a href="https://backoffice-aldeias.vercel.app/" class="button btn-admin">Painel de Administração</a>
+            <!-- Os links abaixo serão corrigidos pelo utilizador nas definições de deploy se necessário -->
+            <a href="/Jogos-Tradicionais-/" class="button btn-app">Entrar na Aplicação</a>
+            <a href="https://jogos-tradicionais-backoffice.vercel.app/" class="button btn-admin">Painel de Administração</a>
         </div>
         <div class="footer">
-            &copy; 2025 Jogos Tradicionais
+            Desenvolvido para Aldeias e Comissões de Festas
         </div>
     </div>
-    <script>
-        // Redirecionamento automático se detectarmos que estamos no ambiente de build
-        // mas este ficheiro só serve de fallback se o deploy falhar.
-    </script>
 </body>
 </html>
