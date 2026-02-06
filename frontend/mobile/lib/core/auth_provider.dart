@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:jwt_decoder/jwt_decoder.dart';
 import '../services/auth_service.dart';
+import '../models/user.dart';
 
 class AuthProvider with ChangeNotifier {
   String? _token;
@@ -14,6 +15,13 @@ class AuthProvider with ChangeNotifier {
   bool get isInitializing => _isInitializing;
   String? get token => _token;
   Map<String, dynamic>? get userPayload => _userPayload;
+  User? get user => _userPayload != null ? User(
+    id: _userPayload!['sub'] ?? '',
+    nome: _userPayload!['nome'] ?? 'Utilizador',
+    email: _userPayload!['email'] ?? '',
+    role: _userPayload!['role'] ?? 'user',
+    aldeiaId: _userPayload!['aldeiaId'],
+  ) : null;
 
   Future<void> login(String email, String password) async {
     try {

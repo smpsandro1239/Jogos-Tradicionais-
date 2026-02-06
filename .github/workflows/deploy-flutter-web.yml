@@ -15,7 +15,7 @@ concurrency:
   cancel-in-progress: false
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
     steps:
       - name: Checkout repository
@@ -24,11 +24,8 @@ jobs:
       - name: Setup Flutter
         uses: subosito/flutter-action@v2
         with:
-          flutter-version: '3.24.x'  # garante Dart 3.5+ para teu ^3.10.7
+          flutter-version: '3.24.x'
           channel: 'stable'
-
-      - name: Flutter version debug
-        run: flutter --version
 
       - name: Install dependencies
         run: flutter pub get
@@ -37,9 +34,6 @@ jobs:
       - name: Build Flutter Web
         run: flutter build web --release --base-href "/Jogos-Tradicionais-/"
         working-directory: frontend/mobile
-
-      - name: List build output (debug)
-        run: ls -la frontend/mobile/build/web
 
       - name: Add .nojekyll
         run: touch frontend/mobile/build/web/.nojekyll
@@ -51,3 +45,14 @@ jobs:
         uses: actions/upload-pages-artifact@v3
         with:
           path: frontend/mobile/build/web
+
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    needs: build
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment
+        uses: actions/deploy-pages@v4

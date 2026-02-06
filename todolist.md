@@ -62,7 +62,7 @@
 ## DevOps & Deploy
 - [Concluído] Alta - Configuração de Docker para Backend
 - [Concluído] Média - Configuração de Deploy para Vercel (Frontend)
-- [Pendente] Média - Configuração de Deploy para Render (Backend)
+- [Concluído] Média - Configuração de Deploy para Render / GitHub Pages
 
 ## Futuros Jogos & Melhorias
 - [Pendente] Baixa - Modo Transmissão ao Vivo (WebSockets)
@@ -76,17 +76,18 @@
 - [Pendente] Baixa - Sorteio com Peso Real (IoT)
 
 ---
-**Status atual:** Configurando deploy para Vercel e Render.
+**Status atual:** Deploy configurado e correções de compilação aplicadas.
 **Progresso Total Backend:** 100%
-**Progresso Total Projeto:** ~99% (Fase final de DevOps)
+**Progresso Total Projeto:** 100%
 
 **O que foi feito nesta etapa:**
-- Criação de `vercel.json` na raiz para suporte a monorepo.
-- Definição das instruções de Root Directory para a Vercel.
-- Atualização do README com guia de deploy.
+- Eliminação do workflow Jekyll redundante que causava exibição do README no deploy.
+- Correção e conclusão do workflow de deploy do Flutter Web para GitHub Pages.
+- Resolução de erro de compilação no Flutter (getter 'user' no AuthProvider).
+- Resolução de erro de tipo no Backend (EventoStatus em EstatisticasService).
+- Inclusão do nome do utilizador no JWT para exibição correta no frontend.
 
 **O que falta realizar:**
-- Validação final do deploy backend.
-- Pequenos ajustes de UI/UX.
+- Monitorizar os primeiros deploys automáticos.
 
-**Próxima interação:** Finalização de DevOps e suporte ao deploy.
+**Próxima interação:** Entrega final e encerramento das tarefas de DevOps.
