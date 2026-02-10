@@ -4,10 +4,6 @@
     {
       "source": "/api/:path*",
       "destination": "https://jogos-tradicionais-backend.onrender.com/api/:path*"
-    },
-    {
-      "source": "/(.*)",
-      "destination": "https://backoffice-aldeias.vercel.app/$1"
     }
   ]
 }

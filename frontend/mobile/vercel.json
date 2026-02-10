@@ -1,0 +1,10 @@
+{
+  "version": 2,
+  "redirects": [
+    {
+      "source": "/(.*)",
+      "destination": "https://smpsandro1239.github.io/Jogos-Tradicionais-/",
+      "permanent": false
+    }
+  ]
+}
